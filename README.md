@@ -1,6 +1,6 @@
 
-# FPVDemo-Part2
-A Tutorial for using DJI Mobile SDK to create a Camera Application Part 2
+# iOS FPVDemo
+A Tutorial for using DJI Mobile SDK to create a Camera Application
 
 Please check the tutorial here:
 
