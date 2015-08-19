@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CE898363-0BE1-468C-B255-69BCCA4D3A04</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FPVDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>34BB3D3039F51A78F84A3CAAFAD161821EE163F1</key>
+		<string>djigit11-rd.dji.com:SDKDemo/FPVDemo-Part2.git</string>
+		<key>6B3CD325F9F4978D75503CA921567168E59DEABC</key>
+		<string>github.com:DJI-Mobile-SDK/FPVDemo-Part2.git</string>
+		<key>EA7A75FA7EF8BEF432C72314545ECAB599863B43</key>
+		<string>github.com:DJI-Mobile-SDK/iOS-FPVDemo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FPVDemo.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>34BB3D3039F51A78F84A3CAAFAD161821EE163F1</key>
+		<string>../../../FPVDemo-Part2</string>
+		<key>6B3CD325F9F4978D75503CA921567168E59DEABC</key>
+		<string>../../../iOS-FPVDemo-Part2</string>
+		<key>EA7A75FA7EF8BEF432C72314545ECAB599863B43</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:DJI-Mobile-SDK/iOS-FPVDemo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EA7A75FA7EF8BEF432C72314545ECAB599863B43</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>34BB3D3039F51A78F84A3CAAFAD161821EE163F1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FPVDemo-Part2</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EA7A75FA7EF8BEF432C72314545ECAB599863B43</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iOS-FPVDemo</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6B3CD325F9F4978D75503CA921567168E59DEABC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iOS-FPVDemo-Part2</string>
+		</dict>
+	</array>
+</dict>
+</plist>
