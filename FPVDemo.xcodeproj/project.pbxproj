@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A4021F2F1B84302400A42411 /* DJISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4021F2E1B84302400A42411 /* DJISDK.framework */; };
 		A4E3736C1B4576680026DED9 /* DJILinkQueues.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E373061B4576680026DED9 /* DJILinkQueues.m */; };
 		A4E3736D1B4576680026DED9 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E3735D1B4576680026DED9 /* libavcodec.a */; };
 		A4E3736E1B4576680026DED9 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E3735E1B4576680026DED9 /* libavdevice.a */; };
@@ -26,7 +27,6 @@
 		A4F501111B452220003A82BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4F501101B452220003A82BF /* Images.xcassets */; };
 		A4F501141B452220003A82BF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4F501121B452220003A82BF /* LaunchScreen.xib */; };
 		A4F501201B452220003A82BF /* FPVDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F5011F1B452220003A82BF /* FPVDemoTests.m */; };
-		A4F5012B1B4522E3003A82BF /* DJISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F5012A1B4522E3003A82BF /* DJISDK.framework */; };
 		A4F5012D1B452324003A82BF /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F5012C1B452324003A82BF /* libstdc++.6.0.9.dylib */; };
 		A4F5012F1B45232D003A82BF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F5012E1B45232D003A82BF /* libz.dylib */; };
 		A4F5019A1B45253B003A82BF /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F501991B45253B003A82BF /* libiconv.dylib */; };
@@ -44,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A4021F2E1B84302400A42411 /* DJISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DJISDK.framework; path = FPVDemo/DJISDK.framework; sourceTree = "<group>"; };
 		A4E373051B4576680026DED9 /* DJILinkQueues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJILinkQueues.h; sourceTree = "<group>"; };
 		A4E373061B4576680026DED9 /* DJILinkQueues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJILinkQueues.m; sourceTree = "<group>"; };
 		A4E3730A1B4576680026DED9 /* avcodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avcodec.h; sourceTree = "<group>"; };
@@ -146,7 +147,6 @@
 		A4F501191B452220003A82BF /* FPVDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FPVDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F5011E1B452220003A82BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4F5011F1B452220003A82BF /* FPVDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FPVDemoTests.m; sourceTree = "<group>"; };
-		A4F5012A1B4522E3003A82BF /* DJISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DJISDK.framework; sourceTree = "<group>"; };
 		A4F5012C1B452324003A82BF /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		A4F5012E1B45232D003A82BF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A4F501991B45253B003A82BF /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
@@ -171,7 +171,7 @@
 				A4F5012D1B452324003A82BF /* libstdc++.6.0.9.dylib in Frameworks */,
 				A4E373751B4576680026DED9 /* libswscale.a in Frameworks */,
 				A4E3736E1B4576680026DED9 /* libavdevice.a in Frameworks */,
-				A4F5012B1B4522E3003A82BF /* DJISDK.framework in Frameworks */,
+				A4021F2F1B84302400A42411 /* DJISDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,10 +443,10 @@
 		A4F501291B4522D0003A82BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A4021F2E1B84302400A42411 /* DJISDK.framework */,
 				A4F501991B45253B003A82BF /* libiconv.dylib */,
 				A4F5012E1B45232D003A82BF /* libz.dylib */,
 				A4F5012C1B452324003A82BF /* libstdc++.6.0.9.dylib */,
-				A4F5012A1B4522E3003A82BF /* DJISDK.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -696,6 +696,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/FPVDemo",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -720,6 +721,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/FPVDemo",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
