@@ -8,10 +8,6 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <DJISDK/DJICamera.h>
 
-typedef void (^DJIFileDownloadPreparingBlock)(NSString* fileName, NSUInteger fileSize, BOOL* skip);
-typedef void (^DJIFileDownloadingBlock)(NSData* data, NSError* error);
-typedef void (^DJIFileDownloadCompletionBlock)();
-
 @interface DJIInspireCamera : DJICamera
 
 /**
@@ -104,7 +100,7 @@ typedef void (^DJIFileDownloadCompletionBlock)();
 -(void) setCameraExposureMode:(CameraExposureMode)mode withResult:(DJIExecuteResultBlock)block;
 
 /**
- *  Get camera's exposure mode setting
+ *  Get camera's exposure mode
  *
  *  @param block Remote execute result callback.
  */

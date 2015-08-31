@@ -85,11 +85,11 @@ typedef NS_ENUM(uint8_t, CameraCaptureMode){
      */
     CameraContinousCapture,
     /**
-     *  BURST capture. Support in Inspire/Phantom3 professional/Phantom3 Advanced
+     *  BURST capture. Support in Inspire/Phantom3 professional
      */
     CameraBURSTCapture = CameraContinousCapture,
     /**
-     *  AEB capture. Support in Inspire/Phantom3 professional/Phantom3 Advanced
+     *  AEB capture. Support in Inspire/Phantom3 professional
      */
     CameraAEBCapture,
 };
@@ -760,7 +760,7 @@ typedef struct
     uint8_t contiCaptureCount;
     
     /**
-     *  time interval between two capture action. value should be in range [3, 30]
+     *  time interval between two capture action. value should be in range [5, 30]
      */
     uint16_t timeInterval;
 } CameraContinuousCapturePara;
@@ -959,4 +959,35 @@ typedef NS_ENUM(uint8_t, CameraDigitalFilter){
      */
     CameraDigitalFilterUnknown = 0xFF
 };
+
+/**
+ Download file type for Inspire/Phantom3Profession.
+ */
+typedef enum
+{
+    /**
+     *  The download file is a photo
+     */
+    DJIDownloadFilePhoto,
+    /**
+     *  The download file is a DNG file
+     */
+    DJIDownloadFileDNG,
+    /**
+     *  The download file is a video 720P
+     */
+    DJIDownloadFileVideo720P,
+    /**
+     *  The download file is a video 1080P
+     */
+    DJIDownloadFileVideo1080P,
+    /**
+     *  The download file is a video 4K
+     */
+    DJIDownloadFileVideo4K,
+    /**
+     *  The download file unknown
+     */
+    DJIDownloadFileUnknown
+} DJIDownloadFileType;
 
