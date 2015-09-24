@@ -8,8 +8,8 @@
 
 This tutorial is designed for you to gain a basic understanding of the DJI Mobile SDK. It will implement the FPV view and two basic camera functionalities: **Take Photo** and **Record video**.
 
-   You can download the entire project for this tutorial here: <https://github.com/DJI-Mobile-SDK/iOS-FPVDemo.git>
-
+   You can download the entire project for this tutorial from this **Github Page**. If you want to have a better reading experience, please check out [Gitbook version](http://dji-dev.gitbooks.io/mobile-sdk-tutorials/content/en/iOS/FPVDemo/FPVDemo_en.html)
+   
 ## Download the SDK
 
 You can download the latest iOS SDK from here: <https://developer.dji.com/mobile-sdk/downloads/>
