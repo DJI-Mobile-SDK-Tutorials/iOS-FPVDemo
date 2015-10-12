@@ -43,7 +43,6 @@
     [super viewWillDisappear:animated];
     [_camera stopCameraSystemStateUpdates];
     [_drone disconnectToDrone];
-    [_drone destroy];
     [[VideoPreviewer instance] setView:nil];
     
 }
@@ -97,7 +96,7 @@
     
     __weak DJICameraViewController *weakSelf = self;
     [_camera startTakePhoto:CameraSingleCapture withResult:^(DJIError *error) {
-        if (error.errorCode != ERR_Successed) {
+        if (error.errorCode != ERR_Succeeded) {
             UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Take Photo Error" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [errorAlert show];
             
@@ -113,7 +112,7 @@
         
         [_camera stopRecord:^(DJIError *error) {
             
-            if (error.errorCode != ERR_Successed) {
+            if (error.errorCode != ERR_Succeeded) {
                 UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Stop Record Error" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [errorAlert show];
             }
@@ -123,7 +122,7 @@
     {
         [_camera startRecord:^(DJIError *error) {
             
-            if (error.errorCode != ERR_Successed) {
+            if (error.errorCode != ERR_Succeeded) {
                 UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Start Record Error" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [errorAlert show];
             }
@@ -143,7 +142,7 @@
         
         [inspireCamera setCameraWorkMode:CameraWorkModeCapture withResult:^(DJIError *error) {
             
-            if (error.errorCode != ERR_Successed) {
+            if (error.errorCode != ERR_Succeeded) {
                 UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Set CameraWorkModeCapture Failed" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [errorAlert show];
             }
@@ -154,7 +153,7 @@
     
         [inspireCamera setCameraWorkMode:CameraWorkModeRecord withResult:^(DJIError *error) {
             
-            if (error.errorCode != ERR_Successed) {
+            if (error.errorCode != ERR_Succeeded) {
                 UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Set CameraWorkModeRecord Failed" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [errorAlert show];
             }
@@ -213,7 +212,7 @@
 
 -(void) droneOnConnectionStatusChanged:(DJIConnectionStatus)status
 {
-    if (status == ConnectionSuccessed) {
+    if (status == ConnectionSucceeded) {
         NSLog(@"Connection Successed");
     }
     else if(status == ConnectionStartConnect)

@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "EA7A75FA7EF8BEF432C72314545ECAB599863B43",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "EA7A75FA7EF8BEF432C72314545ECAB599863B43" : 0,
+    "34BB3D3039F51A78F84A3CAAFAD161821EE163F1" : 0,
+    "6B3CD325F9F4978D75503CA921567168E59DEABC" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "CE898363-0BE1-468C-B255-69BCCA4D3A04",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "EA7A75FA7EF8BEF432C72314545ECAB599863B43" : "iOS-FPVDemo",
+    "34BB3D3039F51A78F84A3CAAFAD161821EE163F1" : "FPVDemo-Part2",
+    "6B3CD325F9F4978D75503CA921567168E59DEABC" : "iOS-FPVDemo-Part2"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "FPVDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "FPVDemo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "djigit11-rd.dji.com:SDKDemo\/FPVDemo-Part2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "34BB3D3039F51A78F84A3CAAFAD161821EE163F1"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:DJI-Mobile-SDK\/FPVDemo-Part2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6B3CD325F9F4978D75503CA921567168E59DEABC"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:DJI-Mobile-SDK\/iOS-FPVDemo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EA7A75FA7EF8BEF432C72314545ECAB599863B43"
+    }
+  ]
+}
