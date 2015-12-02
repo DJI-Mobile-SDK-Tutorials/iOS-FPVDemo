@@ -16,11 +16,11 @@ You can download the latest iOS SDK from here: <https://developer.dji.com/mobile
 
 The development package includes:
 
-- SDK demo project (This includes implementation of main features such as camera, gimbal control, Ground Station and Joystick)
+- SDK demo project (This includes implementation of main features such as camera, flightController, gimbal control, etc)
 - Documentations
 - Framework
 
-Minimum Requirement: iOS 6.1 or above
+Minimum Requirement: iOS 8.0 or above
 
 ## Import the SDK framework
 
@@ -28,13 +28,13 @@ Minimum Requirement: iOS 6.1 or above
 
    ![ImportSDK](./Images/importSDK.png)
    
-**2**. Select the project target, in this case **FPVDemo**, and go to **Build Phases -> Link Binary With Libraries**. Click the "+" button at the bottom and add two libraries to your project: libstdc++.6.0.9.dylib and libz.dylib. These two libraries are necessay to compile the SDK framework.
+**2**. Select the project target, in this case **FPVDemo**, and go to **Build Phases -> Link Binary With Libraries**. Click the "+" button at the bottom and add two libraries to your project: libstdc++.6.0.9.tbd and libz.tbd. These two libraries are necessay to compile the SDK framework.
 
 **3**. Since some of the code in the SDK framework uses C++, you need to change the extension of one of the project's implementation files to "**.mm**". We use "**AppDelegate.m**" file as an example and change its name to "**AppDelegate.mm**".
 
-**4**. **Important**: If you want to develop apps for Inspire 1 or Phantom 3 series using the SDK, MFI communications support is required.
+**4**. **Important**: If you want to enable your app to connect to the MFI remote controller, like Inspire 1, Phantom 3 Professional, etc. MFI communications support is required.
 
-   Let's go the project's plist file in Supporting Files folder, add the MFI protocol names as shown below:
+   Go to project's info.plist file in **Supporting Files** folder, add the MFI protocol names as shown below:
   
    ![MFI](./Images/MFIProtocol.png)
 
