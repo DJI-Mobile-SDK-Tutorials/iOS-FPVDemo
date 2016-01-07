@@ -10,11 +10,7 @@
 #import <DJISDK/DJISDK.h>
 #import "VideoPreviewer.h"
 
-@interface DJICameraViewController ()<DJICameraDelegate, DJIDroneDelegate, DJIAppManagerDelegate>
-{
-    DJIDrone *_drone;
-    DJICamera* _camera;
-}
+@interface DJICameraViewController ()<DJICameraDelegate, DJISDKManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *recordBtn;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *changeWorkModeSegmentControl;
@@ -30,35 +26,23 @@
 
 @implementation DJICameraViewController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[VideoPreviewer instance] setView:self.fpvPreviewView];
     
+    [[VideoPreviewer instance] setView:self.fpvPreviewView];
+    [self registerApp];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    
     [super viewWillDisappear:animated];
-    [_camera stopCameraSystemStateUpdates];
-    [_drone disconnectToDrone];
     [[VideoPreviewer instance] setView:nil];
-    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _drone = [[DJIDrone alloc] initWithType:DJIDrone_Inspire];
-    _drone.delegate = self;
-    _camera = _drone.camera;
-    _camera.delegate = self;
-    
     [self.currentRecordTimeLabel setHidden:YES];
-    
-    [self registerApp];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,101 +51,31 @@
 }
 
 #pragma mark Custom Methods
+- (DJICamera*) fetchCamera {
+
+    if (![DJISDKManager product]) {
+        return nil;
+    }
+    
+    if ([[DJISDKManager product] isKindOfClass:[DJIAircraft class]]) {
+        return ((DJIAircraft*)[DJISDKManager product]).camera;
+    }
+
+    return nil;
+}
+
+- (void)showAlertViewWithTitle:(NSString *)title withMessage:(NSString *)message
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 - (void)registerApp
 {
-    NSString *appKey = @"Enter Your App Key Here";
-    [DJIAppManager registerApp:appKey withDelegate:self];
-}
-
-#pragma mark DJIAppManagerDelegate Method
--(void)appManagerDidRegisterWithError:(int)error
-{
-    NSString* message = @"Register App Successed!";
-    if (error != RegisterSuccess) {
-        message = @"Register App Failed! Please enter your App Key and check the network.";
-    }else
-    {
-        NSLog(@"registerAppSuccess");
-        [_drone connectToDrone];
-        [_camera startCameraSystemStateUpdates];
-        [[VideoPreviewer instance] start];
-        
-    }
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Register App" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alertView show];
-}
-
-- (IBAction)captureAction:(id)sender {
-    
-    __weak DJICameraViewController *weakSelf = self;
-    [_camera startTakePhoto:CameraSingleCapture withResult:^(DJIError *error) {
-        if (error.errorCode != ERR_Succeeded) {
-            UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Take Photo Error" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [errorAlert show];
-            
-        }
-    }];
-}
-
-- (IBAction)recordAction:(id)sender {
-    
-    __weak DJICameraViewController *weakSelf = self;
-    
-    if (self.isRecording) {
-        
-        [_camera stopRecord:^(DJIError *error) {
-            
-            if (error.errorCode != ERR_Succeeded) {
-                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Stop Record Error" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [errorAlert show];
-            }
-        }];
-        
-    }else
-    {
-        [_camera startRecord:^(DJIError *error) {
-            
-            if (error.errorCode != ERR_Succeeded) {
-                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Start Record Error" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [errorAlert show];
-            }
-        }];
-
-    }
-
-}
-
-- (IBAction)changeWorkModeAction:(id)sender {
-    
-    DJIInspireCamera* inspireCamera = (DJIInspireCamera*)_camera;
-    __weak DJICameraViewController *weakSelf = self;
-
-    UISegmentedControl *segmentControl = (UISegmentedControl *)sender;
-    if (segmentControl.selectedSegmentIndex == 0) { //CaptureMode
-        
-        [inspireCamera setCameraWorkMode:CameraWorkModeCapture withResult:^(DJIError *error) {
-            
-            if (error.errorCode != ERR_Succeeded) {
-                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Set CameraWorkModeCapture Failed" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [errorAlert show];
-            }
-            
-        }];
-        
-    }else if (segmentControl.selectedSegmentIndex == 1){ //RecordMode
-    
-        [inspireCamera setCameraWorkMode:CameraWorkModeRecord withResult:^(DJIError *error) {
-            
-            if (error.errorCode != ERR_Succeeded) {
-                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Set CameraWorkModeRecord Failed" message:error.errorDescription delegate:weakSelf cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [errorAlert show];
-            }
-        
-        }];
-        
-    }
-    
+    NSString *appKey = @"fd830f75e9cbbe625e13dfdc";
+    [DJISDKManager registerApp:appKey withDelegate:self];
 }
 
 - (NSString *)formattingSeconds:(int)seconds
@@ -175,58 +89,136 @@
     return formattedTimeString;
 }
 
-#pragma mark - DJICameraDelegate
+#pragma mark DJISDKManagerDelegate Method
 
--(void) camera:(DJICamera*)camera didReceivedVideoData:(uint8_t*)videoBuffer length:(int)length
+-(void) sdkManagerProductDidChangeFrom:(DJIBaseProduct* _Nullable) oldProduct to:(DJIBaseProduct* _Nullable) newProduct
 {
-    uint8_t* pBuffer = (uint8_t*)malloc(length);
-    memcpy(pBuffer, videoBuffer, length);
-    [[VideoPreviewer instance].dataQueue push:pBuffer length:length];
+    __weak DJICamera* camera = [self fetchCamera];
+    if (camera) {
+        [camera setDelegate:self];
+    }
+}
+
+- (void)sdkManagerDidRegisterAppWithError:(NSError *)error
+{
+    NSString* message = @"Register App Successed!";
+    if (error) {
+        message = @"Register App Failed! Please enter your App Key and check the network.";
+    }else
+    {
+        NSLog(@"registerAppSuccess");
+    
+        [DJISDKManager startConnectionToProduct];
+        [[VideoPreviewer instance] start];
+    }
+    
+    [self showAlertViewWithTitle:@"Register App" withMessage:message];
+}
+
+#pragma mark - DJICameraDelegate
+-(void)camera:(DJICamera *)camera didReceiveVideoData:(uint8_t *)videoBuffer length:(size_t)size
+{
+    uint8_t* pBuffer = (uint8_t*)malloc(size);
+    memcpy(pBuffer, videoBuffer, size);
+    [[VideoPreviewer instance].dataQueue push:pBuffer length:(int)size];
 }
 
 -(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState
 {
-    if (_drone.droneType == DJIDrone_Inspire) {
-        
-        self.isRecording = systemState.isRecording;
-        
-        [self.currentRecordTimeLabel setHidden:!self.isRecording];
-        [self.currentRecordTimeLabel setText:[self formattingSeconds:systemState.currentRecordingTime]];
-        
+    self.isRecording = systemState.isRecording;
+    
+    [self.currentRecordTimeLabel setHidden:!self.isRecording];
+    [self.currentRecordTimeLabel setText:[self formattingSeconds:systemState.currentVideoRecordingTimeInSeconds]];
+    
+    if (self.isRecording) {
+        [self.recordBtn setTitle:@"Stop Record" forState:UIControlStateNormal];
+    }else
+    {
+        [self.recordBtn setTitle:@"Start Record" forState:UIControlStateNormal];
+    }
+    
+    //Update UISegmented Control's state
+    if (systemState.mode == DJICameraModeShootPhoto) {
+        [self.changeWorkModeSegmentControl setSelectedSegmentIndex:0];
+    }else if (systemState.mode == DJICameraModeRecordVideo){
+        [self.changeWorkModeSegmentControl setSelectedSegmentIndex:1];
+    }
+    
+}
+
+#pragma mark - IBAction Methods
+
+- (IBAction)captureAction:(id)sender {
+    
+    __weak DJICameraViewController *weakSelf = self;
+    __weak DJICamera* camera = [self fetchCamera];
+    if (camera) {
+        [camera startShootPhoto:DJICameraShootPhotoModeSingle withCompletion:^(NSError * _Nullable error) {
+            if (error) {
+                [weakSelf showAlertViewWithTitle:@"Take Photo Error" withMessage:error.description];
+            }
+        }];
+    }
+
+}
+
+- (IBAction)recordAction:(id)sender {
+    
+    __weak DJICameraViewController *weakSelf = self;
+    
+    __weak DJICamera* camera = [self fetchCamera];
+    if (camera) {
+    
         if (self.isRecording) {
-            [self.recordBtn setTitle:@"Stop Record" forState:UIControlStateNormal];
+            
+            [camera stopRecordVideoWithCompletion:^(NSError * _Nullable error) {
+                if (error) {
+                    [weakSelf showAlertViewWithTitle:@"Stop Record Video Error" withMessage:error.description];
+                }
+            }];
+            
         }else
         {
-            [self.recordBtn setTitle:@"Start Record" forState:UIControlStateNormal];
+            [camera startRecordVideoWithCompletion:^(NSError * _Nullable error) {
+                if (error) {
+                    [weakSelf showAlertViewWithTitle:@"Start Record Video Error" withMessage:error.description];
+                }
+            }];
         }
-        
-        //Update UISegmented Control's state
-        if (systemState.workMode == CameraWorkModeCapture) {
-            [self.changeWorkModeSegmentControl setSelectedSegmentIndex:0];
-        }else if (systemState.workMode == CameraWorkModeRecord){
-            [self.changeWorkModeSegmentControl setSelectedSegmentIndex:1];
-        }
-       
+  
     }
 }
 
--(void) droneOnConnectionStatusChanged:(DJIConnectionStatus)status
-{
-    if (status == ConnectionSucceeded) {
-        NSLog(@"Connection Successed");
+- (IBAction)changeWorkModeAction:(id)sender {
+    
+    __weak DJICameraViewController *weakSelf = self;
+    UISegmentedControl *segmentControl = (UISegmentedControl *)sender;
+    
+    __weak DJICamera* camera = [self fetchCamera];
+    
+    if (camera) {
+        
+        if (segmentControl.selectedSegmentIndex == 0) { //Take photo
+            
+            [camera setCameraMode:DJICameraModeShootPhoto withCompletion:^(NSError * _Nullable error) {
+                if (error) {
+                    [weakSelf showAlertViewWithTitle:@"Set DJICameraModeShootPhoto Failed" withMessage:error.description];
+                }
+                
+            }];
+            
+        }else if (segmentControl.selectedSegmentIndex == 1){ //Record video
+            
+            [camera setCameraMode:DJICameraModeRecordVideo withCompletion:^(NSError * _Nullable error) {
+                if (error) {
+                    [weakSelf showAlertViewWithTitle:@"Set DJICameraModeRecordVideo Failed" withMessage:error.description];
+                }
+                
+            }];
+            
+        }
     }
-    else if(status == ConnectionStartConnect)
-    {
-        NSLog(@"Start Reconnect");
-    }
-    else if(status == ConnectionBroken)
-    {
-        NSLog(@"Connection Broken");
-    }
-    else if (status == ConnectionFailed)
-    {
-        NSLog(@"Connection Failed");
-    }
+
 }
 
 @end

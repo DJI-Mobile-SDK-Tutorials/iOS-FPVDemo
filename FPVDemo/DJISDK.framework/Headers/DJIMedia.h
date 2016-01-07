@@ -2,105 +2,136 @@
 //  DJIMedia.h
 //  DJISDK
 //
-//  Copyright (c) 2015 DJI. All rights reserved.
+//  Copyright © 2015, DJI. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "DJIBaseProduct.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+/*********************************************************************************/
+#pragma mark - DJIMediaType
+/*********************************************************************************/
 
 @class UIImage;
-
 /**
- *  Media type
+ *  Media types.
  */
-typedef NS_ENUM(NSUInteger, MediaType){
+typedef NS_ENUM (NSUInteger, DJIMediaType){
     /**
-     *  Unknown
+     *  Unknown.
      */
-    MediaTypeUnknown,
+    DJIMediaTypeUnknown,
     /**
-     *  JPG
+     *  JPEG.
      */
-    MediaTypeJPG,
+    DJIMediaTypeJPEG,
     /**
-     *  MP4
+     *  MP4.
      */
-    MediaTypeMP4,
+    DJIMediaTypeMP4,
     /**
-     *  MOV
+     *  MOV.
      */
-    MediaTypeMOV,
+    DJIMediaTypeMOV,
     /**
-     *  M4V
+     *  M4V.
      */
-    MediaTypeM4V,
+    DJIMediaTypeM4V,
     /**
-     *  DNG
+     *  DNG.
      */
-    MediaTypeDNG,
+    DJIMediaTypeRAWDNG,
+    /**
+     *  Panorama
+     */
+    DJIMediaTypePanorama,
+
 };
 
-typedef void (^AsyncOperationHandler)(NSError* error);
-typedef void (^AsyncFetchHandler)(NSData* data, BOOL* stop, NSError* error);
+/*********************************************************************************/
+#pragma mark - DJIMedia
+/*********************************************************************************/
 
+/**
+ *  This class contains the information about a multi-media file on the SD card. It also provides methods to fetch the data of the file.
+ */
 @interface DJIMedia : NSObject
 
 /**
- *  The media file name
+ *  Returns the name of the media file.
  */
-@property(nonatomic, readonly) NSString* fileName;
+@property(nonatomic, readonly) NSString *fileName;
 
 /**
- *  The media file size
+ *  Returns the size, in bytes, of the media file.
  */
-@property(nonatomic, readonly) long long fileSize;
+@property(nonatomic, readonly) long long fileSizeInBytes;
 
 /**
- *  The media's create time
+ *  Returns the time when the media file was created as a string in
+ *  the format "YYYY-MM-DD hh:mm:ss".
  */
-@property(nonatomic, readonly) NSString* createTime;
+@property(nonatomic, readonly) NSString *timeCreated;
 
 /**
- *  If media is video. this property is show the duration of the video
+ *  If the media file is a video, this property returns the duration
+ *  of the video in seconds. Will be 0s if media file is a photo.
  */
-@property(nonatomic, readonly) float durationSeconds;
+@property(nonatomic, readonly) float durationInSeconds;
 
 /**
- *  The media type
+ *  Returns the type of media file.
  */
-@property(nonatomic, readonly) MediaType mediaType;
+@property(nonatomic, readonly) DJIMediaType mediaType;
 
 /**
- *  The media url
+ *  Returns the thumbnail for this media. If this property returns nil,
+ *  the user should call fetchThumbnailWithCompletion
  */
-@property(nonatomic, readonly) NSString* mediaURL;
+@property(nonatomic, readonly) UIImage *_Nullable thumbnail;
 
 /**
- *  Thumbnail of this media. if nil user should call once - fetchThumbnail: to fetch the thumbnail data
- */
-@property(nonatomic, readonly) UIImage* thumbnail;
-
--(id) initWithMediaURL:(NSString*)url;
-
-/**
- *  Fetch this media's thumbnail from remote album.
+ *  Fetches this media's thumbnail from the SD card. This method can be used
+ *  to fetch either a photo or a video, where the first frame of the video is
+ *  the thumbnail that is fetched.
+ *  It is available only if the media type is DJIMediaTypePanorama.
  *
- *  @param completion if there is no error, property "thumbnail" will be set
+ *  @param block Completion block.
  */
--(void) fetchThumbnail:(AsyncOperationHandler)completion;
+- (void)fetchThumbnailWithCompletion:(DJICompletionBlock)block;
 
 /**
- *  Fetch media data from remote album.
+ *  Fetches this media's data from the SD card. The difference with fetching
+ *  the media data and fetching the thumbnil is that fetching the thumbnail will
+ *  return a low-resolution image of the actual picture while fetching the media
+ *  data will return all data of a video or an image.
  *
- *  @param handler Data callback will call when received data frome remote or some error occured
+ *  @param block Data callback will be called when media data has been received
+ *  from the SD card or an error has occurred.
  */
--(void) fetchMediaData:(AsyncFetchHandler)handler;
+- (void)fetchMediaDataWithCompletion:(void (^)(NSData *_Nullable data, BOOL *_Nullable stop, NSError *_Nullable error))block;
 
 /**
- *  Fetch media's preview image(960 x 540). the mediaType of this media object should be 'MediaTypeJPG'
+ *  Fetch media's preview image. The preview image is a lower resolution (960 x 540) version of a still picture or
+ *  the first frame of a video. The mediaType of this media object should be 'DJIMediaTypeJPG'.
+ *  It is available only if the media type is DJIMediaTypePanorama.
  *
- *  @param result Remote execute result callback.
+ *  @param block Remote execute result callback.
  */
--(void) fetchPreviewImageWithResult:(void(^)(UIImage* image, NSError* error))result;
+- (void)fetchPreviewImageWithCompletion:(void (^)(UIImage *image, NSError *_Nullable error))block;
+
+
+/**
+ *  Fetch sub media files.
+ *  It is available only when the media type is DJIMediaTypePanorama. User should use this method to fetch the set
+ *  of photos shot in a panorama mission.
+ *
+ *  @param block Remote execute result callback.
+ */
+- (void)fetchSubMediaFileListWithCompletion:(void (^)(NSArray<DJIMedia *> *_Nullable mediaList, NSError *_Nullable error))block;
 
 @end
 
+NS_ASSUME_NONNULL_END

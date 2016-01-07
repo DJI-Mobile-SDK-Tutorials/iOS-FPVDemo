@@ -1,230 +1,179 @@
 //
-//  DJIHotPointSurround.h
+//  DJIHotPointMission.h
 //  DJISDK
 //
-//  Copyright (c) 2015年 DJI. All rights reserved.
+//  Copyright © 2015, DJI. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import <DJISDK/DJIFoundation.h>
-#import <DJISDK/DJIObject.h>
-#import <DJISDK/DJINavigation.h>
+#import "DJIMission.h"
 
 /**
- *  Maximum surrounding radius, which is set to 500 meters. The 
- *  surrounding radius dictates how big the circle around the hot
- *  point is, which the aircraft will travel around as it surrounds
- *  the hot point.
+ *  Maximum radius in meters of the circlular path the aircraft will fly around the point of interest. Currently 500m.
  */
-DJI_API_EXTERN const float DJIMaxSurroundingRadius;
+DJI_API_EXTERN const float DJIHotPointMaxRadius;
 
 /**
- *  Minimum surrounding radius, which is set to 5 meters. The
- *  surrounding radius dictates how big the circle around the hot
- *  point is, which the aircraft will travel around as it surrounds
- *  the hot point.
+ *  Minimum radius in meters of the circlular path the aircraft will fly around the point of interest. Currently 5m.
  */
-DJI_API_EXTERN const float DJIMinSurroundingRadius;
+DJI_API_EXTERN const float DJIHotPointMinRadius;
 
 /**
- *  Aircraft entry point relative to hot point.
+ *  Aircraft start point relative to hot point.
  */
-typedef NS_ENUM(NSUInteger, DJIHotPointEntryPoint){
+typedef NS_ENUM (NSUInteger, DJIHotPointStartPoint){
     /**
-     *  Entry from the North.
+     *  Start from the North.
      */
-    DJIHotPointEntryFromNorth,
+    DJIHotPointStartPointNorth,
     /**
-     *  Entry from the South.
+     *  Start from the South.
      */
-    DJIHotPointEntryFromSouth,
+    DJIHotPointStartPointSouth,
     /**
-     *  Entry from the West.
+     *  Start from the West.
      */
-    DJIHotPointEntryFromWest,
+    DJIHotPointStartPointWest,
     /**
-     *  Entry from the East
+     *  Start from the East
      */
-    DJIHotPointEntryFromEast,
+    DJIHotPointStartPointEast,
     /**
-     *  Entry into the circle surrounding 
-     *  the hot point at the nearest point 
-     *  on the circle to the aircraft.
+     *  Start the circle surrounding the hotpoint at the nearest point
+     *  on the circle to the aircraft's current location.
      */
-    DJIHotPointEntryFromNearest,
+    DJIHotPointStartPointNearest,
 };
 
 /**
- *  Heading mode for aircraft while surrounding the hot point.
+ *  Heading of the aircraft while orbiting the hot point.
  */
-typedef NS_ENUM(NSUInteger, DJIHotPointHeadingMode){
+typedef NS_ENUM (NSUInteger, DJIHotPointHeading){
     /**
-     *  Along the circle looking forward.
+     *  Heading is in the forward direction of travel along the circular path.
      */
-    DJIHotPointHeadingAlongTheCircleLookingForwards,
+    DJIHotPointHeadingAlongCircleLookingForward,
     /**
-     *  Along the circle looking backwards.
+     *  Heading is in the backward direction of travel along the circular path.
      */
-    DJIHotPointHeadingAlongTheCircleLookingBackwards,
+    DJIHotPointHeadingAlongCircleLookingBackward,
     /**
-     *  Towards the hotpoint. As the aircraft 
-     *  moves along the circle surrounding the 
-     *  hot point, the heading will change to ensure 
-     *  it is always towards the hot point.
+     *  Heading is toward the hotpoint.
      */
-    DJIHotPointHeadingTowardsTheHotPoint,
+    DJIHotPointHeadingTowardHotPoint,
     /**
-     *  Backwards the hotpoint. As the aircraft
-     *  moves along the circle surrounding the
-     *  hot point, the heading will change to ensure
-     *  it is always backward the hot point.
+     *  Heading is in the direction of the vector defined by the hotpoint and the aircraft in the direction away from the hotpoint.
      */
-    DJIHotPointHeadingBackwardsTheHotPoint,
+    DJIHotPointHeadingAwayFromHotPoint,
     /**
-     *  The heading will be controlled by the remote
-     *  controller.
+     *  Heading is controlled by the remote controller.
      */
     DJIHotPointHeadingControlledByRemoteController,
     /**
-     *  The heading will be based on the initial direction
-     *  of the aircraft. The initial direction is the 
-     *  aircraft's yaw's heading when the mission started.
+     *  The heading remains as the heading of the aircraft when the mission started.
      */
-    DJIHotPointHeadingUsingInitialDirection
+    DJIHotPointHeadingUsingInitialHeading
 };
 
 /**
  *  All possible hot point mission execution states.
  */
-typedef NS_ENUM(uint8_t, DJIHotpointMissionExecuteState){
+typedef NS_ENUM (uint8_t, DJIHotpointMissionExecutionState){
     /**
-     *  The mission is currently being initialized. the initializing state will happen after the hot mission is started and flying to the entry point.
+     *  The mission has been started and the aircraft is flying to the start point.
      */
-    DJIHotpointMissionExecuteStateInitializing,
+    DJIHotpointMissionExecutionStateInitializing,
     /**
      *  The aircraft is currently moving.
      */
-    DJIHotpointMissionExecuteStateMoving,
+    DJIHotpointMissionExecutionStateMoving,
     /**
-     *  The mission is currently pausing.
+     *  The mission is currently paused by the user.
      */
-    DJIHotpointMissionExecuteStatePausing,
+    DJIHotpointMissionExecutionStatePaused,
 };
 
-@interface DJIHotpointMissionStatus : DJINavigationMissionStatus
+/**
+ *  This class provides the real-time status of the executing hot-point mission.
+ *
+ */
+@interface DJIHotPointMissionStatus : DJIMissionProgressStatus
 
 /**
- *  Returns the current execute state of the hot point mission.
+ *  Returns the current execution state of the hot point mission.
  */
-@property(nonatomic, readonly) DJIHotpointMissionExecuteState execState;
+@property(nonatomic, readonly) DJIHotpointMissionExecutionState executionState;
 
 /**
- *  The distance of the radius between the aircraft and the hot point.
+ *  The current horizontal distance between the aircraft and the hot point in meters.
  */
-@property(nonatomic, readonly) float currentRadius;
-
-/**
- *  Returns the error that occured in executing the hot point mission.
- */
-@property(nonatomic, readonly) DJIError* error;
+@property(nonatomic, readonly) float currentDistanceToHotpoint;
 
 @end
 
-@protocol DJIHotPointMission <DJINavigationMission>
+/*********************************************************************************/
+#pragma mark - Mission
+/*********************************************************************************/
 
+/**
+ *  The class represents a hotpoint mission, which can be executed by the mission manager. User can control the aircraft to fly around the hotpoint with specific radius and altitude. During the execution, user can also using the physical remote controller to modify its radius and speed.
+ *
+ */
+@interface DJIHotPointMission : DJIMission
+
+/*********************************************************************************/
+#pragma mark - Mission Presets
+/*********************************************************************************/
 /**
  *  Sets the coordinate of the hot point.
  */
 @property(nonatomic, assign) CLLocationCoordinate2D hotPoint;
 
 /**
- *  Sets the altitude of the hot point in meters. The value of this property is relative 
- *  to the ground (altitude from which the aircraft took off).
+ *  Sets the altitude of the hot point orbit in meters with range [5,120] meters. The altitude is relative
+ *  to the ground altitude from which the aircraft took off.
  */
 @property(nonatomic, assign) float altitude;
 
 /**
- *  Sets the surrounding radius, which dictates how big or small the circle 
- *  around the hotpoint the aircraft will travel around as it surrounds
- *  the hot point is. The value of this property should be in range of [5, 500] meters.
+ *  Sets the circular flight path radius the aircraft will fly around the hotpoint.
+ *  the hot point is. The value of this property should be in range of [DJIHotPointMinRadius, DJIHotPointMaxRadius] meters.
  */
-@property(nonatomic, assign) float surroundRadius;
+@property(nonatomic, assign) float radius;
 
 /**
- *  Sets whether or not the aircraft will travel along the circle around the hot point 
- *  in a clockwise or counter-clockwise fashion. If the property is set to YES, the aircraft
- *  will travel in a clockwise fashion and if set to NO, the aircraft will travel in a
- *  counter-clockwise fashion.
+ *  YES if the aircraft is to travel around the hotpoint in the clockwise direction.
  */
-@property(nonatomic, assign) BOOL clockwise;
+@property(nonatomic, assign) BOOL isClockwise;
 
 /**
- *  Sets the angular velocity of the drone in degrees/second. The value of this property
- *  should be in the range of [0, 30] degrees/second. The default value is 20 degrees/second. 
- *  The angular velocity is relative to the surroundRadius. Depending on what the
- *  surroundRadius value is, you can use the maxAngularVelocityForRadius: method to get 
- *  the maximum supported angular velocity for a specific surroundRadius value. 
+ *  Sets the angular velocity (in degrees/second) of the aircraft as it orbits the hot point.
+ *  The default value is 20 degrees/s.
+ *  The angular velocity is relative to the orbit radius. You can use the maxAngularVelocityForRadius:radius method
+ *  to get the maximum supported angular velocity for a given radius.
  */
 @property(nonatomic, assign) float angularVelocity;
 
 /**
- *  Aircraft's entry point to enter the flight path when starting the hot point mission. 
+ *  Aircraft's initial point on the circular flight path when starting the hot point mission.
  */
-@property(nonatomic, assign) DJIHotPointEntryPoint entryPoint;
+@property(nonatomic, assign) DJIHotPointStartPoint startPoint;
 
 /**
- *  Heading of aircraft while surrounding the hot point.
+ *  Aircraft's heading while flying around the hot point. It can be pointed towards or away from the hot point,
+ *  forwards or backwards along its flight route, or be controlled by the remote controller.
  */
-@property(nonatomic, assign) DJIHotPointHeadingMode headingMode;
+@property(nonatomic, assign) DJIHotPointHeading heading;
 
 /**
- *  Returns the supported maximum angular velocity in degrees/second for the given 
- *  surrounding radius.
+ *  Returns the supported maximum angular velocity in degrees/second for the given
+ *  hot point radius in meters.
  *
- *  @param surroundRadius Surrounding radius for which to retrieve the maximum angular
- *  velocity. The input value should be in the range of [5, 500] meters or the value 0
- *  will be returned.
+ *  @param radius Hot point radius with range [5,500] meters to calculate maximum angular velocity.
  *
- *  @return Returns the supported maximum angular velocity for the given surroundRadius.
+ *  @return Returns the supported maximum angular velocity for the given radius. Will return 0 if an unsupported radius is input.
  */
--(float) maxAngularVelocityForRadius:(float)surroundRadius;
-
-/**
- *  Gets the mission from the aircraft.
- *
- *  @param block Remote execute result block.
- */
--(void) getMissionWithResult:(DJIExecuteResultBlock)block;
-
-/**
- *  Starts to execute the hot point mission. The aircraft 
- *  will enter NavigationMissionHotpoint mode.
- *
- *  @param result Remote execute result.
- */
--(void) startMissionWithResult:(DJIExecuteResultBlock)result;
-
-/**
- *  Pauses the hot point mission.
- *
- *  @param result Remote execute result.
- */
--(void) pauseMissionWithResult:(DJIExecuteResultBlock)result;
-
-/**
- *  Resumes the hot point mission.
- *
- *  @param result Remote execute result.
- */
--(void) resumeMissionWithResult:(DJIExecuteResultBlock)result;
-
-/**
- *  Stops the hot point mission.
- *
- *  @param result Remote execute result.
- */
--(void) stopMissionWithResult:(DJIExecuteResultBlock)result;
++ (float)maxAngularVelocityForRadius:(float)radius;
 
 @end
-

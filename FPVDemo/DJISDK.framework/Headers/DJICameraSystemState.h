@@ -2,68 +2,60 @@
 //  DJICameraSystemState.h
 //  DJISDK
 //
-//  Copyright (c) 2015 DJI. All rights reserved.
+//  Copyright © 2015, DJI. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <DJISDK/DJICameraSettingsDef.h>
 
+/**
+ *  This class provides general information and current status of the camera.
+ */
 @interface DJICameraSystemState : NSObject
 
 /**
- *  Show the camera is taking RAW capture or JPEG capture.
+ *  YES when camera is performing any photo capture in any shootPhotoMode. Between photo capture in interval and time lapse mode, this property will be NO. The camera is shooting single photo.
+ *
  */
-@property(nonatomic, readonly) BOOL isTakingRawCapture;
+@property(nonatomic, readonly) BOOL isShootingSinglePhoto;
 
 /**
- *  The camera is taking continuous capture.
+ *  YES when the camera is performing a photo capture in RAW or RAW+JPEG format. Between photo capture in interval and time lapse mode, this property will
+ *  be NO. If saving the photo in JPEG only, this property will always be NO.
  */
-@property(nonatomic, readonly) BOOL isTakingContinusCapture;
+@property(nonatomic, readonly) BOOL isShootingSinglePhotoInRAWFormat;
 
 /**
- *  The camera is taking multi capture.
+ *  YES when camera is performing an interval capture. Will be yes after startShootPhoto is called, and NO after stopShootPhoto is called.
  */
-@property(nonatomic, readonly) BOOL isTakingMultiCapture;
+@property(nonatomic, readonly) BOOL isShootingIntervalPhoto;
 
 /**
- *  The camera is taking single capture.
+ *  YES when camera is performing a burst capture. Will be yes after startShootPhoto is called, and NO after burst is complete.
+ *  The camera is shooting burst photos.
  */
-@property(nonatomic, readonly) BOOL isTakingSingleCapture;
+@property(nonatomic, readonly) BOOL isShootingBurstPhoto;
 
 /**
- *  Whether the camera's time has synced.
- */
-@property(nonatomic, readonly) BOOL isTimeSynced;
-
-/**
- *  Whether the camera is in recording.
+ *  YES if camera is recording video
  */
 @property(nonatomic, readonly) BOOL isRecording;
 
 /**
- *  The camera is over heated.
+ *  YES if camera is storing a photo.
+ *  When isStoringPhoto is YES, user cannot change the camera mode or start to shoot another photo.
+ */
+@property(nonatomic, readonly) BOOL isStoringPhoto;
+
+/**
+ *  YES if camera is too hot.
  */
 @property(nonatomic, readonly) BOOL isCameraOverHeated;
 
 /**
  *  The camera's sensor error.
  */
-@property(nonatomic, readonly) BOOL isCameraSensorError;
-
-/**
- *  Invalid operation.
- */
-@property(nonatomic, readonly) BOOL isInvalidOperation;
-
-/**
- *  The camera has serious error.
- */
-@property(nonatomic, readonly) BOOL isSeriousError;
-
-/**
- *  Indicate whether the SD card exists in the camera.
- */
-@property(nonatomic, readonly) BOOL isSDCardExist;
+@property(nonatomic, readonly) BOOL isCameraError;
 
 /**
  *  Indicate whether the camera is in usb mode.
@@ -71,18 +63,13 @@
 @property(nonatomic, readonly) BOOL isUSBMode;
 
 /**
- *  Indicate whether the camera is connected to PC.
+ *  Current mode of the camera.
  */
-@property(nonatomic, readonly) BOOL isConnectedToPC;
+@property(nonatomic, readonly) DJICameraMode mode;
 
 /**
- *  Current work mode of camera. Property is available in Inspire/Phantom3 professional
+ *  Time of current video being recorded by camera in seconds.
  */
-@property(nonatomic, readonly) CameraWorkMode workMode;
-
-/**
- *  Current recording time of camera. Property is available in Inspire/Phantom3 professional
- */
-@property(nonatomic, readonly) int currentRecordingTime;
+@property(nonatomic, readonly) int currentVideoRecordingTimeInSeconds;
 
 @end

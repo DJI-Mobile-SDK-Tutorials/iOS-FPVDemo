@@ -1,25 +1,20 @@
 //
-//  DJINavigationWaypoint.h
+//  DJIWaypointMission.h
 //  DJISDK
 //
-//  Copyright (c) 2015年 DJI. All rights reserved.
+//  Copyright © 2015, DJI. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <DJISDK/DJINavigation.h>
-#import <DJISDK/DJIWaypoint.h>
+#import <CoreLocation/CoreLocation.h>
+#import "DJIMission.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@class DJIWaypoint;
 
 /**
- *  Waypoint mission upload and download progress handlers.
- *
- *  @param progress Progress will be in the range of [0, 100] percent.
- */
-typedef void (^DJIWaypointMissionUploadProgressHandler)(uint8_t progress);
-typedef void (^DJIWaypointMissionDownloadProgressHandler)(uint8_t progress);
-
-
-/**
- *  Maximum number of waypoints allowed in a waypoint mission. This 
+ *  Maximum number of waypoints allowed in a waypoint mission. This
  *  number has been set to 100.
  */
 DJI_API_EXTERN const int DJIWaypointMissionMaximumWaypointCount;
@@ -33,28 +28,31 @@ DJI_API_EXTERN const int DJIWaypointMissionMinimumWaypointCount;
 /**
  *  Current waypoint mission state.
  */
-typedef NS_ENUM(uint8_t, DJIWaypointMissionExecuteState){
+typedef NS_ENUM (uint8_t, DJIWaypointMissionExecuteState){
     /**
      *  Waypoint mission is initializing, which means the mission has
      *  started and the aircraft is going to the first waypoint.
      */
     DJIWaypointMissionExecuteStateInitializing,
     /**
-     *  Aircraft is currently moving towards the mission's next waypoint.
+     *  Aircraft is currently moving toward the mission's next waypoint. happens when the 'flightPathMode' is set as DJIWaypointMissionFlightPathNormal.
      */
     DJIWaypointMissionExecuteStateMoving,
     /**
-     *  Aircraft is currently rotating.
+     *  Aircraft is currently moving. happens when the 'flightPathMode' is set as DJIWaypointMissionFlightPathCurved.
      */
-    DJIWaypointMissionExecuteStateRotating,
+    DJIWaypointMissionExecuteStateCurveModeMoving,
     /**
-     *  Aircraft has reached a waypoint and is processing the current waypoint's
-     *  actions. This state is before any waypoint action is executed. This state
-     *  occurs once for each waypoint action.
+     *  Aircraft is currently turning. happens when the 'flightPathMode' is set as DJIWaypointMissionFlightPathCurved.
+     */
+    DJIWaypointMissionExecuteStateCurveModeTurning,
+    /**
+     *  Aircraft has reached a waypoint, has rotated to the new heading and is now processing actions.
+     * This state will be called before the waypoint actions starts executing and will occur for each waypoint action.
      */
     DJIWaypointMissionExecuteStateBeginAction,
     /**
-     *  Aircraft is at a waypoint and is executing the current action.
+     *  Aircraft is at a waypoint and is executing an action.
      */
     DJIWaypointMissionExecuteStateDoingAction,
     /**
@@ -62,100 +60,105 @@ typedef NS_ENUM(uint8_t, DJIWaypointMissionExecuteState){
      *  action. This state occurs once for each waypoint action.
      */
     DJIWaypointMissionExecuteStateFinishedAction,
+    /**
+     *  Aircraft is return to first waypoint. happens when the 'finishedAction' is set as DJIWaypointMissionFinishedGoFirstWaypoint
+     */
+    DJIWaypointMissionExecuteStateReturnToFirstWaypoint
 };
 
-typedef NS_ENUM(uint8_t, DJIWaypointMissionFinishedAction)
-{
+/**
+ *  Actions for when the waypoint mission has finished.
+ */
+typedef NS_ENUM (uint8_t, DJIWaypointMissionFinishedAction){
     /**
-     *  No action will be taken. The aircraft will exit the task and hover in the
-     *  air where the task was completed. After that, the aircraft will be able 
-     *  to be controlled by the remote controller.
+     *  No further action will be taken on completion of mission. At this point, the aircraft can be controlled by the remote controller.
      */
     DJIWaypointMissionFinishedNoAction,
     /**
-     *  The aicraft will go home.
+     *  The aicraft will go home when the mission is complete.
+     *  If the aircraft is more than 20m away from the home point it will go home and land.
+     *  Otherwise, it will land directly at the current location.
      */
     DJIWaypointMissionFinishedGoHome,
     /**
-     *  The aircraft will land automatically.
+     *  The aircraft will land automatically at the last waypoint.
      */
     DJIWaypointMissionFinishedAutoLand,
     /**
-     *  The aircraft will go back to its first waypoint.
+     *  The aircraft will go back to its first waypoint and hover in position.
      */
     DJIWaypointMissionFinishedGoFirstWaypoint,
     /**
-     *  If the user attempts to pull the aircraft back along the flight path as the 
-     *  mission is being executed, the aircarft will move towards the previous waypoint 
-     *  and will continue to do so until there are no more waypoint to move back to or 
-     *  the user has stopped attempting to move the aircraft back. In the process of moving the
-     *  aircraft back, if the user ever stops attempting to do so the aircraft will,
-     *  automatically continue the mission until the end.
-     *
-     *  If the aircraft had been pulled back along the flight path all the way to the 
-     *  first waypoint, and the user continued to pull the back, the aircarft would continue
-     *  to hover at the first waypoint. Now, if the user stopped attempting to pull the aircraft
-     *  back, the aicraft would execute the mission from start to finish, as it would've if you 
-     *  had just started the waypoint mission for the first time.
+     *  When the aircraft reaches its final waypoint, it will hover without ending the mission. The joystick can still be used to pull the aircraft back along its previous waypoints. The only way this mission can end is if stopMission is called.
      */
-    DJIWaypointMissionFinishedContinueUntilEnd
+    DJIWaypointMissionFinishedContinueUntilStop
 };
 
 /**
  *  Current waypoint mission heading mode.
  */
-typedef NS_ENUM(NSUInteger, DJIWaypointMissionHeadingMode){
+typedef NS_ENUM (NSUInteger, DJIWaypointMissionHeadingMode){
     /**
-     *  Aircraft's heading alway be the tangent to the direction of the path to each 
-     *  of the waypoints in the waypoint mission. For example, when the aircarft is
-     *  moving past a waypoint along a curved path, the heading of the aicraft will be
-     *  tangent to the curve.
+     *  Aircraft's heading will always be in the direction of flight.
      */
     DJIWaypointMissionHeadingAuto,
     /**
-     *  Aircraft's heading will be set to the initial direction the aircraft
-     *  took off from.
+     *  Aircraft's heading will be set to the initial take-off heading.
      */
     DJIWaypointMissionHeadingUsingInitialDirection,
     /**
      *  Aircraft's heading will be controlled by the remote controller.
      */
-    DJIWaypointMissionHeadingControlByRemoteController,
+    DJIWaypointMissionHeadingControledByRemoteController,
     /**
-     *  Aircraft's heading will be set based on each individual waypoint's heading value
+     *  Aircraft's heading will gradually change between waypoints.
      */
     DJIWaypointMissionHeadingUsingWaypointHeading,
+    /**
+     *  Aircraft's heading will always toward point of interest.
+     */
+    DJIWaypointMissionHeadingTowardPointOfInterest,
 };
 
-typedef NS_ENUM(NSUInteger, DJIWaypointMissionFlightPathMode)
-{
+typedef NS_ENUM (NSUInteger, DJIWaypointMissionFlightPathMode){
     /**
-     *  The flight path will be normal and the aircraft will 
+     *  The flight path will be normal and the aircraft will
      *  move from one waypoint to the next in straight lines.
      */
     DJIWaypointMissionFlightPathNormal,
     /**
      *  The flight path will be curved and the aircraft will
-     *  move from one waypoint to the next in a curved motion, 
-     *  adhering to the cornerRadius, which is set in DJIWaypoint.h.
+     *  move from one waypoint to the next in a curved motion,
+     *  adhering to the cornerRadiusInMeters, which is set in DJIWaypoint.h.
+     *
      */
     DJIWaypointMissionFlightPathCurved
 };
 
-/**
- *  Current waypoint mission status.
- */
-@interface DJIWaypointMissionStatus : DJINavigationMissionStatus
+typedef NS_ENUM (NSInteger, DJIWaypointMissionGotoWaypointMode) {
+    /**
+     *  Go to waypoint safely. Aircraft will rise to the same altitude of waypoint if current altitude is lower then the waypoint
+     *  altitude. then go to waypoint coordinate from altitude, then go to altitude of waypoint.
+     */
+    DJIWaypointMissionGotoWaypointSafely,
+    /**
+     *  Go to waypoint frome current aircraft point to the waypoint directly.
+     */
+    DJIWaypointMissionGotoWaypointPointToPoint,
+};
 
 /**
- *  Index of the waypoint in the array of all waypoints for the
- *  waypoint mission the aircraft will move to next.
+ *  This class provides the real-time status of an executing waypoint mission.
+ */
+@interface DJIWaypointMissionStatus : DJIMissionProgressStatus
+
+/**
+ *  Index of the waypoint in the waypoint array for the mission that the aircraft will move to next.
  */
 @property(nonatomic, readonly) NSInteger targetWaypointIndex;
 
 /**
- *  Whether or not the aircraft has reached a waypoint. Will return
- *  true if a waypoint has been reached.
+ *  YES when aircraft reaches a waypoint. After waypoint actions and heading change is complete, the targetWaypointIndex will increment and this property will become NO.
  */
 @property(nonatomic, readonly) BOOL isWaypointReached;
 
@@ -164,30 +167,58 @@ typedef NS_ENUM(NSUInteger, DJIWaypointMissionFlightPathMode)
  */
 @property(nonatomic, readonly) DJIWaypointMissionExecuteState execState;
 
-/**
- *  Last error during execution of the waypoint mission.
- */
-@property(nonatomic, readonly) DJIError* error;
-
 @end
 
-@protocol DJIWaypointMission <DJINavigationMission>
+/*********************************************************************************/
+#pragma mark - Mission
+/*********************************************************************************/
 
 /**
- *  Number of waypoints in the waypoint mission. 
+ *  In the waypoint mission, the aircraft will travel between waypoints, execute actions at
+ *  waypoints, and adjust heading and altitude between waypoints.
+ *
+ *  The aircraft travels between waypoints automatically at a base speed. However, the user can change the speed by
+ *  using the pitch joystick. If the stick is pushed up, the speed will increase. If the stick is pushed down, the speed
+ *  will slow down. The stick can be pushed down to stop the aircraft and further pushed to start making the aircraft
+ *  travel back along the path it came. When the aircraft is travelling through waypoints in the reverse order, it will
+ *  not execute waypoint actions at each waypoint. If the stick is released, the aircraft will again travel through the
+ *  waypoints in the original order, and continue to execute waypoint actions (even if executed previously).
+ *
+ *  If the aircraft is pulled back along the waypoint mission all the way to the first waypoint, then it will hover in place
+ *  until the stick is released enough for it to again progress through the mission from start to finish.
+ */
+
+@interface DJIWaypointMission : DJIMission
+/*********************************************************************************/
+#pragma mark - Mission Presets
+/*********************************************************************************/
+
+/**
+ *  Number of waypoints in the waypoint mission.
  */
 @property(nonatomic, readonly) int waypointCount;
 
 /**
- *  Max flight speed for a waypoint mission. The maxFlightSpeed value will be
- *  the result of the autoFlightSpeed value plus the max controlled speed by remote controller,
- *  the maxFlightSpeed should be in range [2, 15]m/s.
+ *  While the aircraft is travelling between waypoints, you can offset its speed by using the throttle joystick on the
+ *  remote controller. maxFlightSpeed is this offset when the joystick is pushed to maximum deflection. For example,
+ *  If maxFlightSpeed is 10 m/s, then pushing the throttle joystick all the way up will add 10 m/s to the aircraft speed,
+ *  while pushing down will subtrace 10 m/s from the aircraft speed. If the remote controller stick is not at maximum
+ *  deflection, then the offset speed will be interpolated between [0, maxFlightSpeed] with a resolution of 1000 steps.
+ *  If the offset speed is negative, then the aircraft will fly backwards to previous waypoints. When it reaches the first
+ *  waypoint, it will then hover in place until a positive speed is applied.
+ *  maxFlightSpeed has a range of [2,15] m/s.
  */
 @property(nonatomic, assign) float maxFlightSpeed;
 
 /**
- *  The automatically flight speed for a waypoint mission. The autoFlightSpeed's absolute value
- *  should be smaller than the maxFlightSpeed value.the autoFlightSpeed should be in range [-15, 15]m/s.
+ *  The base automatic speed of the aircraft as it moves between waypoints with range [-15, 15] m/s.
+ *
+ *  The aircraft's actual speed is a combination of the base automatic speed, and the speed control
+ *  given by the throttle joystick on the remote controller.
+ *
+ *  If autoFlightSpeed >0: Actual speed is autoFlightSpeed + Joystick Speed (with combined max of maxFlightSpeed)
+ *  If autoFlightSpeed =0: Actual speed is controlled only by the remote controller joystick.
+ *  If autoFlightSpeed <0 and the aircraft is at the first waypoint, then the aircraft will hover in place until the speed is made positive by the remote controller joystick.
  */
 @property(nonatomic, assign) float autoFlightSpeed;
 
@@ -197,7 +228,7 @@ typedef NS_ENUM(NSUInteger, DJIWaypointMissionFlightPathMode)
 @property(nonatomic, assign) DJIWaypointMissionFinishedAction finishedAction;
 
 /**
- *  Heading mode the aircraft will adhere to during the waypoint mission.
+ *  Heading of the aircraft as it moves between waypoints. Default is DJIWaypointMissionHeadingAuto.
  */
 @property(nonatomic, assign) DJIWaypointMissionHeadingMode headingMode;
 
@@ -207,123 +238,90 @@ typedef NS_ENUM(NSUInteger, DJIWaypointMissionFlightPathMode)
 @property(nonatomic, assign) DJIWaypointMissionFlightPathMode flightPathMode;
 
 /**
- *  Add a waypoint to the waypoint mission. The maximum number of waypoints should not larger then DJIWaypointMissionMaximumWaypointCount. and DJIWaypointMissionMinimumWaypointCount at least. The distance(three dimensions) between adjacent two waypoints should be in range (2, 2000) meters.
+ *  Determines the aricraft how to go to first waypoint frome current position. Default is DJIWaypointMissionGotoWaypointSafely.
+ */
+@property(nonatomic, assign) DJIWaypointMissionGotoWaypointMode gotoFirstWaypointMode;
+
+/**
+ *  Determines whether exit mission when RC signal lost. Default is NO.
+ */
+@property(nonatomic, assign) BOOL exitMissionOnRCSignalLost;
+
+/**
+ *  Property is used when 'headingMode' is 'DJIWaypointMissionHeadingTowardPointOfInterest'. Aircraft will always heading to
+ *  point while executing mission. Default is kCLLocationCoordinate2DInvalid.
+ */
+@property(nonatomic, assign) CLLocationCoordinate2D pointOfInterest;
+
+/**
+ *  Whether the aircraft can rotate gimbal pitch when execute waypoint mission. If 'YES' then aircraft will control gimal pitch rotation between waypoints using 'gimbalPitch' of DJIWaypoint.
+ */
+@property(nonatomic, assign) BOOL rotateGimbalPitch;
+
+/**
+ *  Repeat times for mission execution. Default is 1.
+ */
+@property(nonatomic, assign) int repeatTimes;
+
+/**
+ *  Add a waypoint to the waypoint mission. The maximum number of waypoints should not larger than DJIWaypointMissionMaximumWaypointCount. A waypoint will only be valid if the distance (in three dimensions) between two adjacent waypoints is in range [0.5,2000] meters.
  *
  *  @param Waypoint to be added to the waypoint mission.
  */
--(void) addWaypoint:(DJIWaypoint*)waypoint;
+- (void)addWaypoint:(DJIWaypoint *_Nonnull)waypoint;
 
 /**
  *  Adds an array of waypoints to the waypoint mission.
  *
  *  @param Array of waypoints to be added to the waypoint mission.
  */
--(void) addWaypoints:(NSArray*)waypoints;
+- (void)addWaypoints:(NSArray *_Nonnull)waypoints;
 
 /**
- *  Removes the waypoint passed in as a parameter from the waypoint mission.
+ *  Removes a specific waypoint previously added.
  *
  *  @param waypoint Waypoint object to be removed.
+ *
  */
--(void) removeWaypoint:(DJIWaypoint*)waypoint;
+- (void)removeWaypoint:(DJIWaypoint *_Nonnull)waypoint;
 
 /**
- *  Removes the waypoint at the index passed in as a parameter from the array of
- *  all waypoints in the waypoint mission.
+ *  Removes the waypoint at an index.
  *
  *  @param index Index of waypoint to be removed from the waypoint mission from
  *  the array of all waypoints.
  */
--(void) removeWaypointAtIndex:(int)index;
+- (void)removeWaypointAtIndex:(int)index;
 
 /**
  *  Removes all waypoints from the waypoint mission.
  */
--(void) removeAllWaypoints;
+- (void)removeAllWaypoints;
 
 /**
- *  Gets a waypoint from the array of waypoints in a waypoint mission based on
- *  the index passsed into the method.
+ *  Gets a waypoint at an index in the mission waypoint array.
  *
  *  @param index Index of the waypoint wanting to be retrieved from the array of waypoints in the
  *  waypoint mission.
  *
  *  @return Waypoint of type DJIWaypoint if the index exists.
  */
--(DJIWaypoint*) waypointAtIndex:(int)index;
+- (DJIWaypoint *_Nullable)getWaypointAtIndex:(int)index;
+
+/*********************************************************************************/
+#pragma mark - Mission Updates
+/*********************************************************************************/
 
 /**
- *  Sets up the upload progress handler, which will tell the user how much progress has been
- *  made in uploading the waypoint mission. The handler will return an integer in the range 
- *  of [0, 100] percent.
+ *  Set the flight speed while the mission is executing automatically (without manual joystick speed input). This is the only property or method in this class that can communicate with the aircraft during a mission. All other properties and methods are used offline to prepare the mission which is then uploaded to the aircraft.
  *
- *  @param handler Upload progress handler.
+ *  @param speed Auto flight speed to be set. The absolute value of the auto flight speed should be less than or equal to the maxFlightSpeed. It's range is then [-maxFlightSpeed, maxFlightSpeed] m/s.
+ *
+ *  @param completion Completion block.
+ *
  */
--(void) setUploadProgressHandler:(DJIWaypointMissionUploadProgressHandler)handler;
-
-/**
- *  Sets up the download progress handler, which will tell the user how much progress has been
- *  made in downloading the waypoint mission. The handler will return an integer in the range 
- *  of [0, 100] percent.
- *
- *  @param handler Download progress handler.
- */
--(void) setDownloadProgressHandler:(DJIWaypointMissionDownloadProgressHandler)handler;
-
-/**
- *  Uploads the waypoint mission.
- *
- *  @param block Remote execute result callback.
- */
--(void) uploadMissionWithResult:(DJIExecuteResultBlock)block;
-
-/**
- *  Downloads the waypoint mission from the aircraft. If the download is successful, the
- *  mission's properties will be updated.
- *
- *  @param block Remote execute result callback.
- */
--(void) downloadMissionWithResult:(DJIExecuteResultBlock)block;
-
-/**
- *  Starts the waypoint mission.
- *
- *  @param block Remote execute result.
- */
--(void) startMissionWithResult:(DJIExecuteResultBlock)block;
-
-/**
- *  Pauses the waypoint mission.
- *
- *  @param block Remote execute result callback.
- */
--(void) pauseMissionWithResult:(DJIExecuteResultBlock)block;
-
-/**
- *  Resumes the waypoint mission.
- *
- *  @param block Remote execute result callback.
- */
--(void) resumeMissionWithResult:(DJIExecuteResultBlock)block;
-
-/**
- *  Stops the waypoint mission. If mission stops successfully, the user will not be able to start 
- *  the mission again.
- *
- *  @param block Remote execute result callback.
- */
--(void) stopMissionWithResult:(DJIExecuteResultBlock)block;
-
-/**
- *  Resets the auto flight speed. This can be used to change the auto flight speed during a 
- *  waypoint mission.
- *
- *  @param speed Auto flight speed to be set. The autoFlightSpeed value should be smaller than the
- *  maxFlightSpeed value, should be greater than the DJIWaypointMissionMinimumAutoFlightSpeed value,
- *  and should not exceed the DJIWaypointMissionMaxAutoFlightSpeed value.
- *
- *  @param block Remote execute result callback.
- */
--(void) resetAutoFlightSpeed:(float)speed withResult:(DJIExecuteResultBlock)block;
++ (void)setAutoFlightSpeed:(float)speed withCompletion:(DJICompletionBlock)completion;
 
 @end
+
+NS_ASSUME_NONNULL_END
