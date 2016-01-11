@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark DJIHandheldWiFiFrequency Type
 //-----------------------------------------------------------------
 /**
- *  Remote controller pairing state.
+ *  Handheld WiFi Frequency Type.
  */
 typedef NS_ENUM (uint8_t, DJIHandheldWiFiFrequencyType){
     /**
@@ -40,21 +40,20 @@ typedef NS_ENUM (uint8_t, DJIHandheldPowerMode){
      */
     DJIHandheldPowerModeAwake,
     /**
-     *  The Handheld Power Mode is sleeping. The handheld controller remains the WiFi connection
-     *  to the Mobile device but most of the components are off. The power consumption is low
+     *  The Handheld Power Mode is sleeping. The handheld controller keeps the WiFi connection
+     *  to the Mobile device alive but most other components are off. The power consumption is low
      *  in this mode.
      *  For OSMO, when it is in this mode, only the DJIHandheldController, DJIAirLink and DJIBattery
      *  are accessible.
      */
     DJIHandheldPowerModeSleeping,
     /**
-     *  The Handheld Power Mode is power-off. Once the user set it as the handheld power mode and
-     *  the command is executing, the delegate will receive this mode until the handheld device is
+     *  The Handheld Power Mode is power-off. Once this mode is set the delegate will receive this mode until the handheld device is
      *  shut down completely.
      */
     DJIHandheldPowerModePowerOff,
     /**
-     *  The Handheld Power Mode in unkown
+     *  The Handheld Power Mode in unkown.
      */
     DJIHandheldPowerModeUnknown = 0xFF
 };
@@ -90,7 +89,7 @@ typedef NS_ENUM (uint8_t, DJIHandheldPowerMode){
 /*********************************************************************************/
 /**
  *
- *  This class contains interfaces to control handheld device, you can make handheld device enter sleep mode, awake from sleep mode or shut it down.
+ *  This class contains interfaces to control a handheld device. You can make the handheld device enter sleep mode, awake from sleep mode or shut it down.
  */
 @interface DJIHandheldController : DJIBaseComponent
 
@@ -100,11 +99,11 @@ typedef NS_ENUM (uint8_t, DJIHandheldPowerMode){
 @property(nonatomic, weak) id <DJIHandheldControllerDelegate> delegate;
 
 /**
- *  Set up the power mode for handheld.
+ *  Set the power mode for handheld.
  *
  *  @param mode     The power mode to set.
  *                  CAUTION: when the mode is DJIHandheldPowerModePowerOff, the handheld device will be shut down and
- *                  the connection will be broken. User need to power on the device manually.
+ *                  the connection will be broken. User then needs to power on the device manually.
  *  @param block    Remote execution result callback block.
  */
 - (void)setHandheldPowerMode:(DJIHandheldPowerMode)mode withCompletion:(DJICompletionBlock)block;

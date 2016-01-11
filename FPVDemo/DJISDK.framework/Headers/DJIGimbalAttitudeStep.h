@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DJIGimbalAttitudeStep : DJIMissionStep
 
 /**
- *  Completion time in second for gimbal go to target attitude from current attitude. default is 1s.
+ *  Completion time in seconds for gimbal go to target attitude from current attitude. Default is 1s.
  */
 @property(nonatomic, assign) double completionTime;
 

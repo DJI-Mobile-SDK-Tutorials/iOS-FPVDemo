@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Initialized instance with duration.
  *
- *  @param duration Duration in second for recording video.
+ *  @param duration Duration in seconds for recording video.
  *
  *  @return Instance of DJIRecordVideoStep
  */

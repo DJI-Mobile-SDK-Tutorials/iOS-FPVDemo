@@ -398,7 +398,7 @@ typedef struct
      */
     float accuracy;
     /**
-     *  Whether or not the GPS data is valid. The data is not valid if there are too few satellites or the signal strength is too low.
+     *  YES if the GPS data is valid. The data is not valid if there are too few satellites or the signal strength is too low.
      */
     BOOL isValid;
 } DJIRCGPSData;
@@ -1085,7 +1085,7 @@ typedef struct
  *  method is used by a master Remote Controller to respond to the slave Remote Controller's request.
  *
  *  @param requesterId The slave Remote Controller's identifier.
- *  @param isAgree     Whether or not the master Remote Controller agrees or disagrees to give the slave
+ *  @param isAgree     YES if the master Remote Controller agrees to give the slave
  *  Remote Controller the right to control the gimbal.
  */
 - (void)responseRequester:(DJIRCID)requesterId forGimbalControlRight:(BOOL)isAgree;

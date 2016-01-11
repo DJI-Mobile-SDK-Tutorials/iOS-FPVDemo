@@ -206,7 +206,7 @@ typedef NS_ENUM (NSUInteger, DJIWaypointActionType){
  *  Removes the last waypoint action from the waypoint.
  *
  *  @param action Waypoint action to be removed from the waypoint.
- *  @return Whether or not the waypoint action has been removed from the waypoint.
+ *  @return YES if the waypoint action has been removed from the waypoint.
  */
 - (BOOL)removeAction:(DJIWaypointAction *)action;
 

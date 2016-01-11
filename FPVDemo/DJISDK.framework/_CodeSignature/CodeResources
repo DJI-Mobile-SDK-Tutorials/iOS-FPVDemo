@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/DJIAirLink.h</key>
 		<data>
-		2Jvb2VAcWUCT1EvK5H7BW/wz8x4=
+		3wOdEc1tntEETwLJO/Ic51zerqI=
 		</data>
 		<key>Headers/DJIAircraft.h</key>
 		<data>
@@ -18,15 +18,15 @@
 		</data>
 		<key>Headers/DJIBaseProduct.h</key>
 		<data>
-		DtYJF8Qr3nklpMcPbFxn7purQBU=
+		XEb3v3ehbKBDdCYJyyKkVd1ay7E=
 		</data>
 		<key>Headers/DJIBattery.h</key>
 		<data>
-		i3cVW3vgOZDVySxlecHy6qI46e0=
+		Nrr+uxIZZERFSYq/uwE7sVtVrjk=
 		</data>
 		<key>Headers/DJICamera.h</key>
 		<data>
-		GGy+XD1GrgLH38OKl4/J2OasMIE=
+		5l69jejgtuK6zH6q6F4pX7Q3hS4=
 		</data>
 		<key>Headers/DJICameraLensState.h</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Headers/DJICompass.h</key>
 		<data>
-		6RE9DPzPrmDo3DSS4L9dAb1VldQ=
+		FnXryfAZ8UAPzV1EKkyp2m+f8j8=
 		</data>
 		<key>Headers/DJICustomMission.h</key>
 		<data>
@@ -58,7 +58,7 @@
 		</data>
 		<key>Headers/DJIFlightController.h</key>
 		<data>
-		uaPfVenniCwITdP12nG0zxkOfhU=
+		PyIUyFUkJYKkwVCRf6EMmvtHOyY=
 		</data>
 		<key>Headers/DJIFlightControllerCurrentState.h</key>
 		<data>
@@ -66,7 +66,7 @@
 		</data>
 		<key>Headers/DJIFlightLimitation.h</key>
 		<data>
-		LstFa0jajyaYDhIPwA2esbOjkd4=
+		BHe7G4SY1lxtZ1pw05bdtZiOBTw=
 		</data>
 		<key>Headers/DJIFollowMeMission.h</key>
 		<data>
@@ -74,15 +74,15 @@
 		</data>
 		<key>Headers/DJIFollowMeStep.h</key>
 		<data>
-		ztrGeogUWAR2u7szbg1KM3p3Ulo=
+		H0coXHR5S7vlaUpfw991JKM+T+M=
 		</data>
 		<key>Headers/DJIGimbal.h</key>
 		<data>
-		AtFYeOnSkGaL893AXQSoq+Z/n9g=
+		jXI+WUctmxIlUv+5GhNhQUHyRFc=
 		</data>
 		<key>Headers/DJIGimbalAttitudeStep.h</key>
 		<data>
-		6eNHh1Nluy8R/Z2ExmjUDSDY09A=
+		Z4z9QaFcTOgGIEc/ILbt7FF0zdQ=
 		</data>
 		<key>Headers/DJIGoHomeStep.h</key>
 		<data>
@@ -90,7 +90,7 @@
 		</data>
 		<key>Headers/DJIGoToStep.h</key>
 		<data>
-		Hcoq/eir150gnG1Zxl8QPKXTmG4=
+		LQpFFqd2Rk2XjhqdqWmzf+NR1cQ=
 		</data>
 		<key>Headers/DJIHandheld.h</key>
 		<data>
@@ -98,7 +98,7 @@
 		</data>
 		<key>Headers/DJIHandheldController.h</key>
 		<data>
-		Dt6SfRAOUlet6741LIDIkDF5gyQ=
+		gImV8L3/Ab7GW5mA3gISaa0BYdw=
 		</data>
 		<key>Headers/DJIHotPointMission.h</key>
 		<data>
@@ -106,7 +106,7 @@
 		</data>
 		<key>Headers/DJIHotpointStep.h</key>
 		<data>
-		ggqOHzaemnWigXCRh3YwwVPN0xY=
+		umoKNL/k+3LADNjMjZgHTkygQpM=
 		</data>
 		<key>Headers/DJILBAirLink.h</key>
 		<data>
@@ -114,15 +114,15 @@
 		</data>
 		<key>Headers/DJILandingGear.h</key>
 		<data>
-		KRfqJdHAVBVoWeHf1xIo30hWiPY=
+		wYJCEch3QVERMP0t/1IqmWgr15E=
 		</data>
 		<key>Headers/DJIMedia.h</key>
 		<data>
-		NFk3q+B2K29F7ciQ6+LeFkddG8A=
+		FgoR5s228bXtMFq2dH0tJtjrpmo=
 		</data>
 		<key>Headers/DJIMediaManager.h</key>
 		<data>
-		e5XQngJIZHYnyBcfRs80LrZi5T8=
+		S6ZKtb5nq711/ak0joFLOZVjfGk=
 		</data>
 		<key>Headers/DJIMission.h</key>
 		<data>
@@ -130,7 +130,7 @@
 		</data>
 		<key>Headers/DJIMissionManager.h</key>
 		<data>
-		gyqDYg4H7gxGMC1rGSOzAMQ3brk=
+		dvHdH5CbEqlWkKR7ReUxZKSBKq0=
 		</data>
 		<key>Headers/DJIMissionStep.h</key>
 		<data>
@@ -146,11 +146,11 @@
 		</data>
 		<key>Headers/DJIRecordVideoStep.h</key>
 		<data>
-		BX/qhyzy861UuR16/pqBsCuz42Y=
+		xtpCW5wAfdDUDJRgy3C5mBpwEMI=
 		</data>
 		<key>Headers/DJIRemoteController.h</key>
 		<data>
-		nssNUaVtmn8PkkgZ0w9j8f/urbg=
+		28BKjVVMIQBY5rl5HUZA06/srdI=
 		</data>
 		<key>Headers/DJIRemoteLogger.h</key>
 		<data>
@@ -162,11 +162,11 @@
 		</data>
 		<key>Headers/DJISDKManager.h</key>
 		<data>
-		BD+An4uihj/+bIW1s38gxww9FAU=
+		pugRwKaqk7B1whEWJJykUMVYXMI=
 		</data>
 		<key>Headers/DJIShootPhotoStep.h</key>
 		<data>
-		4XW4r2b8MRZObqbhUdaP95F6HeA=
+		r1bvotHA/fP1HNKMJ9daMJSu9n8=
 		</data>
 		<key>Headers/DJITakeoffStep.h</key>
 		<data>
@@ -174,7 +174,7 @@
 		</data>
 		<key>Headers/DJIWaypoint.h</key>
 		<data>
-		HCWXwnZOJ6ryW7c1vEFNmdAbyQg=
+		indZhpBjWCYw/3mO30rdjtlY+aQ=
 		</data>
 		<key>Headers/DJIWaypointMission.h</key>
 		<data>
@@ -194,7 +194,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		QxYUnr6bCp7PGPBBGstkAVeSVJI=
+		g84JdFUq2pkW4pzO4V2avf5WXN0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -205,7 +205,7 @@
 	<dict>
 		<key>Headers/DJIAirLink.h</key>
 		<data>
-		2Jvb2VAcWUCT1EvK5H7BW/wz8x4=
+		3wOdEc1tntEETwLJO/Ic51zerqI=
 		</data>
 		<key>Headers/DJIAircraft.h</key>
 		<data>
@@ -217,15 +217,15 @@
 		</data>
 		<key>Headers/DJIBaseProduct.h</key>
 		<data>
-		DtYJF8Qr3nklpMcPbFxn7purQBU=
+		XEb3v3ehbKBDdCYJyyKkVd1ay7E=
 		</data>
 		<key>Headers/DJIBattery.h</key>
 		<data>
-		i3cVW3vgOZDVySxlecHy6qI46e0=
+		Nrr+uxIZZERFSYq/uwE7sVtVrjk=
 		</data>
 		<key>Headers/DJICamera.h</key>
 		<data>
-		GGy+XD1GrgLH38OKl4/J2OasMIE=
+		5l69jejgtuK6zH6q6F4pX7Q3hS4=
 		</data>
 		<key>Headers/DJICameraLensState.h</key>
 		<data>
@@ -249,7 +249,7 @@
 		</data>
 		<key>Headers/DJICompass.h</key>
 		<data>
-		6RE9DPzPrmDo3DSS4L9dAb1VldQ=
+		FnXryfAZ8UAPzV1EKkyp2m+f8j8=
 		</data>
 		<key>Headers/DJICustomMission.h</key>
 		<data>
@@ -257,7 +257,7 @@
 		</data>
 		<key>Headers/DJIFlightController.h</key>
 		<data>
-		uaPfVenniCwITdP12nG0zxkOfhU=
+		PyIUyFUkJYKkwVCRf6EMmvtHOyY=
 		</data>
 		<key>Headers/DJIFlightControllerCurrentState.h</key>
 		<data>
@@ -265,7 +265,7 @@
 		</data>
 		<key>Headers/DJIFlightLimitation.h</key>
 		<data>
-		LstFa0jajyaYDhIPwA2esbOjkd4=
+		BHe7G4SY1lxtZ1pw05bdtZiOBTw=
 		</data>
 		<key>Headers/DJIFollowMeMission.h</key>
 		<data>
@@ -273,15 +273,15 @@
 		</data>
 		<key>Headers/DJIFollowMeStep.h</key>
 		<data>
-		ztrGeogUWAR2u7szbg1KM3p3Ulo=
+		H0coXHR5S7vlaUpfw991JKM+T+M=
 		</data>
 		<key>Headers/DJIGimbal.h</key>
 		<data>
-		AtFYeOnSkGaL893AXQSoq+Z/n9g=
+		jXI+WUctmxIlUv+5GhNhQUHyRFc=
 		</data>
 		<key>Headers/DJIGimbalAttitudeStep.h</key>
 		<data>
-		6eNHh1Nluy8R/Z2ExmjUDSDY09A=
+		Z4z9QaFcTOgGIEc/ILbt7FF0zdQ=
 		</data>
 		<key>Headers/DJIGoHomeStep.h</key>
 		<data>
@@ -289,7 +289,7 @@
 		</data>
 		<key>Headers/DJIGoToStep.h</key>
 		<data>
-		Hcoq/eir150gnG1Zxl8QPKXTmG4=
+		LQpFFqd2Rk2XjhqdqWmzf+NR1cQ=
 		</data>
 		<key>Headers/DJIHandheld.h</key>
 		<data>
@@ -297,7 +297,7 @@
 		</data>
 		<key>Headers/DJIHandheldController.h</key>
 		<data>
-		Dt6SfRAOUlet6741LIDIkDF5gyQ=
+		gImV8L3/Ab7GW5mA3gISaa0BYdw=
 		</data>
 		<key>Headers/DJIHotPointMission.h</key>
 		<data>
@@ -305,7 +305,7 @@
 		</data>
 		<key>Headers/DJIHotpointStep.h</key>
 		<data>
-		ggqOHzaemnWigXCRh3YwwVPN0xY=
+		umoKNL/k+3LADNjMjZgHTkygQpM=
 		</data>
 		<key>Headers/DJILBAirLink.h</key>
 		<data>
@@ -313,15 +313,15 @@
 		</data>
 		<key>Headers/DJILandingGear.h</key>
 		<data>
-		KRfqJdHAVBVoWeHf1xIo30hWiPY=
+		wYJCEch3QVERMP0t/1IqmWgr15E=
 		</data>
 		<key>Headers/DJIMedia.h</key>
 		<data>
-		NFk3q+B2K29F7ciQ6+LeFkddG8A=
+		FgoR5s228bXtMFq2dH0tJtjrpmo=
 		</data>
 		<key>Headers/DJIMediaManager.h</key>
 		<data>
-		e5XQngJIZHYnyBcfRs80LrZi5T8=
+		S6ZKtb5nq711/ak0joFLOZVjfGk=
 		</data>
 		<key>Headers/DJIMission.h</key>
 		<data>
@@ -329,7 +329,7 @@
 		</data>
 		<key>Headers/DJIMissionManager.h</key>
 		<data>
-		gyqDYg4H7gxGMC1rGSOzAMQ3brk=
+		dvHdH5CbEqlWkKR7ReUxZKSBKq0=
 		</data>
 		<key>Headers/DJIMissionStep.h</key>
 		<data>
@@ -345,11 +345,11 @@
 		</data>
 		<key>Headers/DJIRecordVideoStep.h</key>
 		<data>
-		BX/qhyzy861UuR16/pqBsCuz42Y=
+		xtpCW5wAfdDUDJRgy3C5mBpwEMI=
 		</data>
 		<key>Headers/DJIRemoteController.h</key>
 		<data>
-		nssNUaVtmn8PkkgZ0w9j8f/urbg=
+		28BKjVVMIQBY5rl5HUZA06/srdI=
 		</data>
 		<key>Headers/DJIRemoteLogger.h</key>
 		<data>
@@ -361,11 +361,11 @@
 		</data>
 		<key>Headers/DJISDKManager.h</key>
 		<data>
-		BD+An4uihj/+bIW1s38gxww9FAU=
+		pugRwKaqk7B1whEWJJykUMVYXMI=
 		</data>
 		<key>Headers/DJIShootPhotoStep.h</key>
 		<data>
-		4XW4r2b8MRZObqbhUdaP95F6HeA=
+		r1bvotHA/fP1HNKMJ9daMJSu9n8=
 		</data>
 		<key>Headers/DJITakeoffStep.h</key>
 		<data>
@@ -373,7 +373,7 @@
 		</data>
 		<key>Headers/DJIWaypoint.h</key>
 		<data>
-		HCWXwnZOJ6ryW7c1vEFNmdAbyQg=
+		indZhpBjWCYw/3mO30rdjtlY+aQ=
 		</data>
 		<key>Headers/DJIWaypointMission.h</key>
 		<data>

@@ -42,7 +42,6 @@ typedef void (^_Nullable DJICompletionBlock)(NSError *_Nullable error);
  *  This protocol provides delegate methods to get notified on component and product connectivity changes.
  *
  */
-
 @protocol DJIBaseProductDelegate <NSObject>
 
 @optional

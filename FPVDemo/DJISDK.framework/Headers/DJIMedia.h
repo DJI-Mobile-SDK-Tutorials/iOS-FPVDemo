@@ -96,7 +96,7 @@ typedef NS_ENUM (NSUInteger, DJIMediaType){
  *  Fetches this media's thumbnail from the SD card. This method can be used
  *  to fetch either a photo or a video, where the first frame of the video is
  *  the thumbnail that is fetched.
- *  It is available only if the media type is DJIMediaTypePanorama.
+ *  It is not available if the media type is DJIMediaTypePanorama.
  *
  *  @param block Completion block.
  */
@@ -116,7 +116,7 @@ typedef NS_ENUM (NSUInteger, DJIMediaType){
 /**
  *  Fetch media's preview image. The preview image is a lower resolution (960 x 540) version of a still picture or
  *  the first frame of a video. The mediaType of this media object should be 'DJIMediaTypeJPG'.
- *  It is available only if the media type is DJIMediaTypePanorama.
+ *  It is not available if the media type is DJIMediaTypePanorama.
  *
  *  @param block Remote execute result callback.
  */

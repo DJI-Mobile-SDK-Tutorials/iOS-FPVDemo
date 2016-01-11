@@ -313,7 +313,7 @@ typedef NS_ENUM (uint8_t, DJIGimbalJoystickAxis){
 @property(nonatomic, readonly) BOOL isCalibrationSuccessful;
 
 /**
- *  Whether or not the Gimbal is calibrating
+ *  YES if the Gimbal is calibrating
  */
 @property(nonatomic, readonly) BOOL isCalibrating;
 

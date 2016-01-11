@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Called when the `product` property changed.
  *
  *  @param oldProduct Old product object. Nil if starting up.
- *  @param newProduct New product object. Nil if the link USB or Wifi link between the product and phone is disconnected.
+ *  @param newProduct New product object. Nil if the USB link or WiFi link between the product and phone is disconnected.
  *
  */
 - (void)sdkManagerProductDidChangeFrom:(DJIBaseProduct *_Nullable)oldProduct to:(DJIBaseProduct *_Nullable)newProduct;
@@ -48,8 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Callback delegate method after the Debug server is started.
  *
- *  @param isRCConnected is ture if the RC is connected with the Debug server.
- *  @param isWifiConnected is true if the debug client is connected with the Debug server based on WIFI.
+ *  @param isRCConnected is true if the RC is connected with the Debug server.
+ *  @param isWifiConnected is true if the debug client is connected with the Debug server based on WiFi.
  *
  */
 - (void)sdkDebugServerWithRCConnectionStatus:(BOOL)isRCConnected andDebugClientConnectionStatus:(BOOL)isWifiConnected;
@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  This class contains methods for you to register app, start or stop connection with the aircraft, and use DJI Bridge app and Remote Logger tools, etc. After the registration, user can access the connected product through DJISDKManager. Then user can start to control the components of the product.
+ *  This class contains methods to register the app, start or stop connection with the product, and use the DJI Bridge app and Remote Logger tools, etc. After the registration, user can access the connected product through DJISDKManager. Then user can start to control the components of the product.
  */
 @interface DJISDKManager : NSObject
 
@@ -77,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)registerApp:(NSString *)appKey withDelegate:(id<DJISDKManagerDelegate>)delegate;
 
 /**
- *  Queue in which completion blocks are called. if left unset, completion blocks are called in main queue.
+ *  Queue in which completion blocks are called. If left unset, completion blocks are called in main queue.
  *
  *  @param completionBlockQueue dispatch queue.
  */
@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)stopConnectionToProduct;
 
 /**
- *  Set SDK close the connection automatically when app enter background and resume connection automatically when app enter foreground. Default is YES.
+ *  Set SDK to close the connection automatically when app enters the background and resume connection automatically when the app enters the foreground. Default is YES.
  *
  *  @param isClose Close connection or not when app enter background.
  */

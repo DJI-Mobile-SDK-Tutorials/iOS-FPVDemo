@@ -87,27 +87,27 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DJIBatteryWarningInformation : NSObject
 
 /**
- *  Whether or not the battery should be discharged due to a current overload.
+ *  YES if battery should be discharged due to a current overload.
  */
 @property(nonatomic, readonly) BOOL dischargeDueToCurrentOverload;
 
 /**
- *  Whether or not the battery should be discharged due to being over heated.
+ *  YES if battery should be discharged due to being over heated.
  */
 @property(nonatomic, readonly) BOOL dischargeDueToOverHeating;
 
 /**
- *  Whether or not the battery should be discharged due to a low temperature.
+ *  YES if battery should be discharged due to a low temperature.
  */
 @property(nonatomic, readonly) BOOL dischargeDueToLowTemperature;
 
 /**
- *  Whether or not the battery should be discharged due to it being short circuited.
+ *  YES if battery should be discharged due to it being short circuited.
  */
 @property(nonatomic, readonly) BOOL dischargeDueToShortCircuit;
 
 /**
- *  Whether or not the battery has been configured to be discharged over a specific
+ *  YES if battery has been configured to be discharged over a specific
  *  number of days. Once the battery is fully charged again, the battery will discharge
  *  over the number of days set here again. This process is cyclical.
  */
@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Returns the index at which one of the cells in the battery is below the normal voltage.
- *  The Phatom 3 Series have 4 cell batteries. The Inspire series and M100 have
+ *  The Phantom 3 Series have 4 cell batteries. The Inspire series and M100 have
  *  6 cell batteries.
  *
  */
@@ -123,7 +123,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Returns the index at which one of the cells in the battery is damaged. The first cell has index 1.
- *  The Phatom 3 Series have 4 cell batteries. The Inspire series and M100 have
+ *  The Phantom 3 Series have 4 cell batteries. The Inspire series and M100 have
  *  6 cell batteries.
  */
 @property(nonatomic, readonly) uint8_t damagedBatteryCellIndex;
@@ -135,7 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*********************************************************************************/
 
 /**
- *  It contains battery cell voltage data.
+ *  Class that contains battery cell voltage data.
  */
 @interface DJIBatteryCell : NSObject
 
@@ -182,12 +182,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly) NSUInteger numberOfCell;
 
 /**
- *  Delegate that recevies the updated state pushed by the battery
+ *  Delegate that recevies the updated state pushed by the battery.
  */
 @property(nonatomic, weak) id<DJIBatteryDelegate> delegate;
 
 /**
- *  Return Yes if it's smart battery
+ *  YES if battery is a smart battery.
  */
 - (BOOL)isSmartBattery;
 

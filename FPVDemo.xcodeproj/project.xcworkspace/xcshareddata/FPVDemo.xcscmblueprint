@@ -4,15 +4,17 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "EA7A75FA7EF8BEF432C72314545ECAB599863B43" : 0,
+    "6B3CD325F9F4978D75503CA921567168E59DEABC" : 0,
     "34BB3D3039F51A78F84A3CAAFAD161821EE163F1" : 0,
-    "6B3CD325F9F4978D75503CA921567168E59DEABC" : 0
+    "EA7A75FA7EF8BEF432C72314545ECAB599863B43" : 0,
+    "F242303504B8CDD3CE213C5B3FFB052B596793AF" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "CE898363-0BE1-468C-B255-69BCCA4D3A04",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "EA7A75FA7EF8BEF432C72314545ECAB599863B43" : "iOS-FPVDemo",
+    "6B3CD325F9F4978D75503CA921567168E59DEABC" : "iOS-FPVDemo-Part2",
     "34BB3D3039F51A78F84A3CAAFAD161821EE163F1" : "FPVDemo-Part2",
-    "6B3CD325F9F4978D75503CA921567168E59DEABC" : "iOS-FPVDemo-Part2"
+    "EA7A75FA7EF8BEF432C72314545ECAB599863B43" : "iOS-FPVDemo",
+    "F242303504B8CDD3CE213C5B3FFB052B596793AF" : ""
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "FPVDemo",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -32,6 +34,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:DJI-Mobile-SDK\/iOS-FPVDemo.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EA7A75FA7EF8BEF432C72314545ECAB599863B43"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/oliver.ou@us003.fly-access.com\/scm\/msdk\/documentation.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F242303504B8CDD3CE213C5B3FFB052B596793AF"
     }
   ]
 }

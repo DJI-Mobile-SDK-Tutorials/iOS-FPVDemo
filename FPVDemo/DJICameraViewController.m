@@ -74,7 +74,7 @@
 
 - (void)registerApp
 {
-    NSString *appKey = @"fd830f75e9cbbe625e13dfdc";
+    NSString *appKey = @"Enter Your App Key Here";
     [DJISDKManager registerApp:appKey withDelegate:self];
 }
 

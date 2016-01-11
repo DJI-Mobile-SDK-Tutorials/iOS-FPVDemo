@@ -613,7 +613,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Post condition:
  *  If AE lock is enabled, spot metering area cannot be set.
  *
- *  @param isLock   Whether or not the camera AE lock is locked or unlocked.
+ *  @param isLock   YES if the camera AE lock is locked or unlocked.
  *  @param callback The execution callback with the execution result returned.
  */
 - (void)setAELock:(BOOL)isLock withCompletion:(DJICompletionBlock)block;

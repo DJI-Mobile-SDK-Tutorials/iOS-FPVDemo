@@ -79,7 +79,7 @@ typedef NS_ENUM (uint8_t, DJILandingGearMode){
 @property(nonatomic, readonly) DJILandingGearMode mode;
 
 /**
- *  Whether or not the landing gear is supported for the connected aircraft.
+ *  YES if the landing gear is supported for the connected aircraft.
  */
 - (BOOL)isLandingGearMovable;
 

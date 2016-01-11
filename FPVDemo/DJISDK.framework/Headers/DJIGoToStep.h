@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DJIGoToStep : DJIMissionStep
 
 /**
- *  Flight speed of aircraft when going to the target location. default is 8 m/s
+ *  Flight speed of aircraft when going to the target location. Default is 8 m/s.
  */
 @property(nonatomic, assign) float flightSpeed;
 
@@ -32,17 +32,17 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Go to altitude from current aircraft position.
  *
- *  @param altitude Target altitude
+ *  @param altitude Target altitude in meters.
  *
  *  @return Instance of DJIGoToStep.
  */
 - (instancetype _Nullable)initWithAltitude:(float)altitude;
 
 /**
- *  Go to position from current aircraft position.
+ *  Go to coordinate and alitude (in meters) from current aircraft position.
  *
  *  @param coorinate Target coordinate
- *  @param altitude  Target altitude
+ *  @param altitude  Target altitude in meters
  *
  *  @return Instance of DJIGoToStep.
  */

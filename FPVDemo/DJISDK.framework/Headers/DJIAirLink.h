@@ -13,12 +13,12 @@
 
 /**
  *  This class contains DJI WiFi and DJI Lightbridge components, you can check if the current device supports WiFi and
- *  Lightbridge features by accessing the following two BOOL varialbles.
+ *  Lightbridge features by accessing the following two BOOL variables.
  */
 @interface DJIAirLink : DJIBaseComponent
 
 /**
- *  YES if Wifi Link is supported
+ *  YES if WiFi Link is supported
  *
  */
 @property (nonatomic, readonly) BOOL isWifiLinkSupported;
@@ -30,13 +30,13 @@
 @property (nonatomic, readonly) BOOL isLBAirLinkSupported;
 
 /**
- *  Returns WiFiLink if its available
+ *  Returns WiFiLink if it's available
  *
  */
 @property (nonatomic, strong) DJIWiFiLink *wifiLink;
 
 /**
- *  Returns Lightbridge Link if its available
+ *  Returns Lightbridge Link if it's available
  *
  */
 @property (nonatomic, strong) DJILBAirLink *lbAirLink;

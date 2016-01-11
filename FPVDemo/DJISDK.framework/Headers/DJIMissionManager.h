@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  This class manages the execution cycle for a mission. To execute a mission, normally user need to first invoke prepareMission:withProgress:withCompletion to get the mission prepared. Then a user can call startMissionExecutionWithCompletion: to start the prepared mission. User can also pause, resume or stop an executing mission if the mission supports the operation.
+ *  This class manages the execution cycle for a mission. To execute a mission, normally user needs to first invoke prepareMission:withProgress:withCompletion to get the mission prepared. Then a user can call startMissionExecutionWithCompletion: to start the prepared mission. User can also pause, resume or stop an executing mission if the mission supports the operation.
  *
  */
 @interface DJIMissionManager : NSObject
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Prepares the mission for execution. For the waypoint mission, data needs to be uploaded to the aircraft (product) and the
  *  DJIMissionProgressHandler can be used to monitor upload progress. The follow-me, panorama, hotpoint and custom missions
- *  requires much shorter time for the preparation phase. PrepareMission should fail if a mission is currently executing.
+ *  require much shorter time for the preparation phase. PrepareMission should fail if a mission is currently executing.
  *
  *  @param mission Mission object
  *  @param preparationProgress Progress handler callback method to monitor preparation progress

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DJIShootPhotoStep : DJIMissionStep
 
 /**
- *  Initialized step for single shoot photo.
+ *  Initialized step for taking a single photo.
  *
  *  @return Instance of DJIShootPhotoStep.
  */
@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Initialized step for continous shoot photo.
  *
  *  @param count    Photo count.
- *  @param interval Time interval in second between two shooting action.
+ *  @param interval Time interval in seconds between shooting photos.
  *
  *  @return Instance of DJIShootPhotoStep.
  */

@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Inialized instance with a follow me mission and duration.
  *
  *  @param mission Mission for follow me step.
- *  @param seconds Duration in seconds for execute this step.
+ *  @param seconds Duration in seconds to this step.
  *
  *  @return Return instance of DJIFollowMeStep.
  */

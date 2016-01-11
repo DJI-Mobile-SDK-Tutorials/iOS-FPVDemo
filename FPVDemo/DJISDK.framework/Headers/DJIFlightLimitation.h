@@ -17,12 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DJIFlightLimitation : NSObject
 
 /**
- *  Whether or not the aircraft has reached max flight height.
+ *  YES if aircraft has reached max flight height.
  */
 @property(nonatomic, readonly) BOOL hasReachedMaxFlightHeight;
 
 /**
- *  Whether or not the aircraft has reached max flight radius.
+ *  YES if aircraft aircraft has reached max flight radius.
  */
 @property(nonatomic, readonly) BOOL hasReachedMaxFlightRadius;
 

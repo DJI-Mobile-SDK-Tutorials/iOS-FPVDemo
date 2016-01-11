@@ -19,8 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DJIHotpointStep : DJIMissionStep
 
 /**
- *  Surrounding angle in degree.Surrounding angle should consisten with the hotpoint mission's
- *  surround direction (isClockwise), default is 360 degree if 'isClockwise' is YES or -360 degree if 'isClockwise' is NO.
+ *  Surrounding angle in degrees. The surrounding angle should be consistant with the hotpoint mission's
+ *  direction (isClockwise), default is 360 degree if 'isClockwise' is YES or -360 degree if 'isClockwise' is NO.
  */
 @property(nonatomic, assign) double surroundingAngle;
 

@@ -159,7 +159,7 @@ Let's create a new method named **registerApp** and invoke it in the viewDidAppe
 }
 ~~~
 ---
-**Note**: In the code above, you will need to obtain an App Key from the DJI Developer website **(<https://developer.dji.com/user/mobile-sdk>)** and you can learn how to create an App from [here](http://developer.dji.com/mobile-sdk/get-started/Register-Download).
+**Note**: In the code above, you will need to obtain an App Key from the DJI Developer website **(<http://developer.dji.com/en/user/apps>)** and you can learn how to create an App from [here](http://developer.dji.com/mobile-sdk/get-started/Register-Download).
 
 The **App Key** we generate for you is associated with the Xcode project **Bundle Identifier**, so you will not be able to use the same App Key in a different Xcode project. Each project must be submitted individually and will receive a unique App Key.
 

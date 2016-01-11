@@ -48,12 +48,12 @@ typedef NS_ENUM (NSUInteger, DJICompassCalibrationStatus){
 @property(nonatomic, readonly) double heading;
 
 /**
- *  Whether or not the compass has error. If YES, the compass needs calibration.
+ *  YES if the compass has error. If YES, the compass needs calibration.
  */
 @property(nonatomic, readonly) BOOL hasError;
 
 /**
- *  Whether or not the compass is currently calibrating.
+ *  YES if the compass is currently calibrating.
  */
 @property(nonatomic, readonly) BOOL isCalibrating;
 
