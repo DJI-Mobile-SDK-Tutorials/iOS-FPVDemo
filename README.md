@@ -8,19 +8,13 @@
 
 This tutorial is designed for you to gain a basic understanding of the DJI Mobile SDK. It will implement the FPV view and two basic camera functionalities: **Take Photo** and **Record video**.
 
-   You can download the entire project for this tutorial from this **Github Page**. If you want to have a better reading experience, please check out [Gitbook version](http://dji-dev.gitbooks.io/mobile-sdk-tutorials/content/en/iOS/FPVDemo/FPVDemo_en.html)
+   You can download the entire project for this tutorial from this **Github Page**.
    
    We use Phantom 3 Professional as an example to make this demo.
    
 ## Download the SDK
 
 You can download the latest iOS SDK from here: <https://developer.dji.com/mobile-sdk/downloads/>
-
-The development package includes:
-
-- SDK demo project (This includes implementation of main features such as camera, flightController, gimbal control, etc)
-- Documentations
-- Framework
 
 Minimum Requirement: iOS 8.0 or above
 
