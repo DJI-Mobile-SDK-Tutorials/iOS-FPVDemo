@@ -36,7 +36,7 @@ Minimum Requirement: iOS 8.0 or above
 
 **2**. In order to enable your app to connect to the MFI remote controller, you must add "Supported external accessory protocols" items in the info.plist file, let's modify it by adding the following content:
 
-  ![MFI](./Images/MFIProtocols.png)
+  ![MFI](./Images/MFIProtocol.png)
    
 **3**. Since in iOS 9, App Transport Security has blocked a cleartext HTTP (http://) resource load since it is insecure. You must add **App Transport Security Settings** items in the info.plist file as shown below too:
 
