@@ -8,9 +8,9 @@
 
 #import "DJICameraViewController.h"
 #import <DJISDK/DJISDK.h>
-#import "VideoPreviewer.h"
+#import <VideoPreviewer/VideoPreviewer.h>
 
-@interface DJICameraViewController ()<DJICameraDelegate, DJISDKManagerDelegate>
+@interface DJICameraViewController ()<DJICameraDelegate, DJISDKManagerDelegate, DJIBaseProductDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *recordBtn;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *changeWorkModeSegmentControl;
@@ -52,15 +52,17 @@
 
 #pragma mark Custom Methods
 - (DJICamera*) fetchCamera {
-
+    
     if (![DJISDKManager product]) {
         return nil;
     }
     
     if ([[DJISDKManager product] isKindOfClass:[DJIAircraft class]]) {
         return ((DJIAircraft*)[DJISDKManager product]).camera;
+    }else if ([[DJISDKManager product] isKindOfClass:[DJIHandheld class]]){
+        return ((DJIHandheld *)[DJISDKManager product]).camera;
     }
-
+    
     return nil;
 }
 
@@ -93,9 +95,12 @@
 
 -(void) sdkManagerProductDidChangeFrom:(DJIBaseProduct* _Nullable) oldProduct to:(DJIBaseProduct* _Nullable) newProduct
 {
-    __weak DJICamera* camera = [self fetchCamera];
-    if (camera) {
-        [camera setDelegate:self];
+    if (newProduct) {
+        [newProduct setDelegate:self];
+        DJICamera* camera = [self fetchCamera];
+        if (camera != nil) {
+            camera.delegate = self;
+        }
     }
 }
 
@@ -115,12 +120,22 @@
     [self showAlertViewWithTitle:@"Register App" withMessage:message];
 }
 
+#pragma mark - DJIBaseProductDelegate Method
+
+-(void) componentWithKey:(NSString *)key changedFrom:(DJIBaseComponent *)oldComponent to:(DJIBaseComponent *)newComponent {
+    
+    if ([key isEqualToString:DJICameraComponentKey] && newComponent != nil) {
+        __weak DJICamera* camera = [self fetchCamera];
+        if (camera) {
+            [camera setDelegate:self];
+        }
+    }
+}
+
 #pragma mark - DJICameraDelegate
 -(void)camera:(DJICamera *)camera didReceiveVideoData:(uint8_t *)videoBuffer length:(size_t)size
 {
-    uint8_t* pBuffer = (uint8_t*)malloc(size);
-    memcpy(pBuffer, videoBuffer, size);
-    [[VideoPreviewer instance].dataQueue push:pBuffer length:(int)size];
+    [[VideoPreviewer instance] push:videoBuffer length:(int)size];
 }
 
 -(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState
