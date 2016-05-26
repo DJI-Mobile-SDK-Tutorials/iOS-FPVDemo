@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A46D08F61CCFAB2100694EEE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A46D08F51CCFAB2100694EEE /* libz.tbd */; };
+		A45FC1221CF6AF760033ED66 /* DJISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A45FC1201CF6AF710033ED66 /* DJISDK.framework */; };
+		A45FC1231CF6AF760033ED66 /* DJISDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A45FC1201CF6AF710033ED66 /* DJISDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A4E596E61CD07BA300D65878 /* VideoPreviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E596E51CD07B8500D65878 /* VideoPreviewer.framework */; };
 		A4E596E71CD07BA300D65878 /* VideoPreviewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A4E596E51CD07B8500D65878 /* VideoPreviewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A4F501061B452220003A82BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F501051B452220003A82BF /* main.m */; };
@@ -17,8 +18,6 @@
 		A4F501141B452220003A82BF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4F501121B452220003A82BF /* LaunchScreen.xib */; };
 		A4F501201B452220003A82BF /* FPVDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F5011F1B452220003A82BF /* FPVDemoTests.m */; };
 		A4F5019D1B454E54003A82BF /* DJICameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F5019C1B454E54003A82BF /* DJICameraViewController.m */; };
-		F70B84241CCCB03E00364E2B /* DJISDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F7BF92D51CCC8B7A00E5F242 /* DJISDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7BF935F1CCC8BD200E5F242 /* DJISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7BF92D51CCC8B7A00E5F242 /* DJISDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +52,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A4E596E71CD07BA300D65878 /* VideoPreviewer.framework in Embed Frameworks */,
-				F70B84241CCCB03E00364E2B /* DJISDK.framework in Embed Frameworks */,
+				A45FC1231CF6AF760033ED66 /* DJISDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,7 +60,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A46D08F51CCFAB2100694EEE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		A45FC1201CF6AF710033ED66 /* DJISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DJISDK.framework; path = FPVDemo/Frameworks/DJISDK.framework; sourceTree = "<group>"; };
 		A4E596E01CD07B8500D65878 /* VideoPreviewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoPreviewer.xcodeproj; path = FPVDemo/Frameworks/VideoPreviewer/VideoPreviewer.xcodeproj; sourceTree = "<group>"; };
 		A4F501001B452220003A82BF /* FPVDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FPVDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F501041B452220003A82BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,7 +75,6 @@
 		A4F5011F1B452220003A82BF /* FPVDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FPVDemoTests.m; sourceTree = "<group>"; };
 		A4F5019B1B454E54003A82BF /* DJICameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJICameraViewController.h; sourceTree = "<group>"; };
 		A4F5019C1B454E54003A82BF /* DJICameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJICameraViewController.m; sourceTree = "<group>"; };
-		F7BF92D51CCC8B7A00E5F242 /* DJISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DJISDK.framework; path = FPVDemo/Frameworks/DJISDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,8 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A46D08F61CCFAB2100694EEE /* libz.tbd in Frameworks */,
-				F7BF935F1CCC8BD200E5F242 /* DJISDK.framework in Frameworks */,
+				A45FC1221CF6AF760033ED66 /* DJISDK.framework in Frameworks */,
 				A4E596E61CD07BA300D65878 /* VideoPreviewer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,9 +168,8 @@
 		A4F501291B4522D0003A82BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A45FC1201CF6AF710033ED66 /* DJISDK.framework */,
 				A4E596E01CD07B8500D65878 /* VideoPreviewer.xcodeproj */,
-				F7BF92D51CCC8B7A00E5F242 /* DJISDK.framework */,
-				A46D08F51CCFAB2100694EEE /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
