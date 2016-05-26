@@ -46,7 +46,7 @@ Minimum Requirement: iOS 8.0 or above
 
 ### Importing the VideoPreviewer
 
- **1**. We use the **FFMPEG** decoding library (found at http://ffmpeg.org) to do software video decoding here. For the hardware video decoding, we provide a **DJIH264Decoder** decoding library. You can find them in the **VideoPreviewer** folder, which you can download it from [DJI iOS SDK Github Repository](https://github.com/dji-sdk/Mobile-SDK-iOS/tree/master/Sample%20Code/VideoPreviewer). Download and copy the entire **VideoPreviewer** folder to your Xcode project's "Frameworkds" folder and then add the "VideoPreviewer.xcodeproj" to the "Frameworks" folder in Xcode project navigator, as shown below:
+ **1**. We use the **FFMPEG** decoding library (found at http://ffmpeg.org) to do software video decoding here. For the hardware video decoding, we provide a **DJIH264Decoder** decoding library. You can find them in the **VideoPreviewer** folder, which you can download it from [DJI iOS SDK Github Repository](https://github.com/dji-sdk/Mobile-SDK-iOS/tree/master/Sample%20Code/VideoPreviewer). Download and copy the entire **VideoPreviewer** folder to your Xcode project's "Frameworks" folder and then add the "VideoPreviewer.xcodeproj" to the "Frameworks" folder in Xcode project navigator, as shown below:
   
  ![projectNavigator](./Images/projectNavigator.png)
  
