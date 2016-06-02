@@ -28,7 +28,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     [[VideoPreviewer instance] setView:self.fpvPreviewView];
     [self registerApp];
