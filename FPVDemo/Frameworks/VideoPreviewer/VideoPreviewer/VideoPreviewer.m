@@ -134,10 +134,10 @@
 +(VideoPreviewer*) instance
 {
     static VideoPreviewer* previewer = nil;
-    if(previewer == nil)
-    {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         previewer = [[VideoPreviewer alloc] init];
-    }
+    });
     return previewer;
 }
 
@@ -378,7 +378,11 @@
         // determine if it is Lightbridge 2
         if ([product isKindOfClass:[DJIAircraft class]]) {
             DJIAircraft* aircraft = (DJIAircraft*)product;
-            if (aircraft.camera == nil && aircraft.airLink && aircraft.airLink.lbAirLink && [aircraft.airLink.lbAirLink isSecondaryVideoOutputSupported]) {
+            if (aircraft.airLink &&
+                aircraft.airLink.lbAirLink &&
+                ([aircraft.model isEqual:DJIAircraftModelNameA3] ||
+                 [aircraft.model isEqual:DJIAircraftModelNameMatrice600] ||
+                 [aircraft.model isEqual:DJIAircraftModelNameUnknownAircraft])) {
                 self.enableHardwareDecode = NO;
                 self.encoderType = H264EncoderType_LightBridge2;
                 return YES;
@@ -390,13 +394,16 @@
     
     // Otherwise, the decoder depends on the camera
     DJICamera* camera = nil;
+    BOOL isHandheld = NO;
     if ([product isKindOfClass:[DJIAircraft class]]) {
         DJIAircraft* aircraft = (DJIAircraft*)product;
         camera = aircraft.camera;
+        isHandheld = NO;
     }
     else if ([product isKindOfClass:[DJIHandheld class]]) {
         DJIHandheld* handheld = (DJIHandheld*)product;
         camera = handheld.camera;
+        isHandheld = YES;
     }
     
     if (camera == nil) {
@@ -411,21 +418,34 @@
         return YES;
     }
     
-    H264EncoderType dataSource = [VideoPreviewer getDataSourceWithCameraName:camera.displayName];
+    H264EncoderType dataSource = [VideoPreviewer getDataSourceWithCamera:camera andIsHandheld:isHandheld];
     if (dataSource == H264EncoderType_unknown) { // The product does not support hardware decoding
         return NO;
     }
     
     self.enableHardwareDecode = YES;
+    self.encoderType = dataSource; 
     [self.hw_decoder setEncoderType:(H264EncoderType)dataSource];
     
     return YES;
 }
 
-+ (H264EncoderType) getDataSourceWithCameraName:(NSString*)name {
++ (H264EncoderType) getDataSourceWithCamera:(DJICamera*)camera andIsHandheld:(BOOL)isHandheld {
+    NSString* name = camera.displayName;
     if ([name isEqualToString:DJICameraDisplayNameX3] ||
-        [name isEqualToString:DJICameraDisplayNameX5] ||
-        [name isEqualToString:DJICameraDisplayNameX5R]) {
+        [name isEqualToString:DJICameraDisplayNameZ3]) {
+        // use `isDigitalZoomScaleSupported` to determine if Osmo with X3 is new firmware version
+        // `isDigitalZoomScaleSupported` has bug in SDK 3.2. Old firmware version doesn't support
+        // digital zoom, but `isDigitalZoomScaleSupported` still returns `YES`.
+        if (isHandheld && [camera isDigitalZoomScaleSupported]) {
+            return H264EncoderType_A9_OSMO_NO_368;
+        }
+        else {
+            return H264EncoderType_DM368_inspire;
+        }
+    }
+    else if ([name isEqualToString:DJICameraDisplayNameX5] ||
+             [name isEqualToString:DJICameraDisplayNameX5R]) {
         return H264EncoderType_DM368_inspire;
     }
     else if ([name isEqualToString:DJICameraDisplayNamePhantom3ProfessionalCamera]) {
@@ -436,6 +456,9 @@
     }
     else if ([name isEqualToString:DJICameraDisplayNamePhantom3StandardCamera]) {
         return H264EncoderType_A9_phantom3c;
+    }
+    else if ([name isEqualToString:DJICameraDisplayNamePhantom4Camera]) {
+        return H264EncoderType_1860_phantom4x;
     }
     
     return H264EncoderType_unknown;
@@ -550,13 +573,14 @@
     
     while(_status.isRunning)
     {
-        @autoreleasepool {
+        @autoreleasepool
+        {
             VideoFrameH264Raw* frameRaw = nil;
             int inputDataSize = 0;
             uint8_t *inputData = nil;
             
             int queueNodeSize;
-            frameRaw = (VideoFrameH264Raw*)[_dataQueue pull:&queueNodeSize];
+            frameRaw = (VideoFrameH264Raw*)[_dataQueue pull:&queueNodeSize]; //now we have got h264 raw format data in frameRaw
             if (frameRaw && frameRaw->frame_size + sizeof(VideoFrameH264Raw) == queueNodeSize) {
                 inputData = frameRaw->frame_data;
                 inputDataSize = frameRaw->frame_size;
@@ -642,10 +666,11 @@
                     
                     DJIVideoStreamProcessorType processor_type = [processor streamProcessorType];
                     
-                    if (processor_type == DJIVideoStreamProcessorType_Decoder) {
+                    if (processor_type == DJIVideoStreamProcessorType_Decoder)
+                    {
                         if(!_status.isBackground){ // do nothing when it is in background
                             long long beforeDecode = [self getTickCount];
-                            if ([processor streamProcessorHandleFrameRaw:frameRaw]) {
+                            if ([processor streamProcessorHandleFrameRaw:frameRaw]) {  //start decode here 
                                 videoDecoderCanReset = YES;
                             }else{
                                 [self videoProcessFailedFrame];
@@ -656,7 +681,6 @@
                     else if(processor_type == DJIVideoStreamProcessorType_Modify
                              || processor_type == DJIVideoStreamProcessorType_Passthrough){
                         [processor streamProcessorHandleFrameRaw:frameRaw];
-                        //[processor streamProcessorHandleFrame:inputData size:inputDataSize];
                     }
                     else if (processor_type == DJIVideoStreamProcessorType_Consume){
                         if(processor != _stream_processor_list.lastObject) {
@@ -670,8 +694,8 @@
                             frameRaw = NULL; // the frame is not released
                         }
                     }
-                }
-            }
+                } //for
+            }//if
             
             if(safe_resume_skip_count){
                 safe_resume_skip_count--;
@@ -715,6 +739,10 @@
     pthread_mutex_unlock(&_processor_mutex);
     
     for (id<VideoFrameProcessor> processor in frameProcessorCopyList) {
+        if (processor == self) {
+            continue;
+        }
+        
         if ([processor conformsToProtocol:@protocol(VideoFrameProcessor)]) {
             
             if (![processor videoProcessorEnabled]) {
