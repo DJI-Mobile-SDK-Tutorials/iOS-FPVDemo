@@ -6,9 +6,56 @@ This FPVDemo is design for you to gain a basic understanding of the DJI Mobile S
 
 ## Requirements
 
- - iOS 8.0+
- - Xcode 7.0+
- - DJI iOS SDK 3.3
+ - iOS 9.0+
+ - Xcode 8.0+
+ - DJI iOS SDK 3.4
+
+## SDK Installation with CocoaPods
+
+Since this project has been integrated with [DJI iOS SDK CocoaPods](https://cocoapods.org/pods/DJI-SDK-iOS) now, please check the following steps to install **DJISDK.framework** using CocoaPods after you downloading this project:
+
+**1.** Install CocoaPods
+
+Open Terminal and change to the download project's directory, enter the following command to install it:
+
+~~~
+sudo gem install cocoapods
+~~~
+
+The process may take a long time, please wait. For further installation instructions, please check [this guides](https://guides.cocoapods.org/using/getting-started.html#getting-started).
+
+**2.** Install Git Large File Storage (Git LFS)
+
+Since the **DJISDK.framework** file exceeds the 100 MB limitation of Github file upload, you need to use [Git Large File Storage](https://git-lfs.github.com) to download the SDK file. Enter the following command to install it:
+
+~~~
+brew install git-lfs
+git lfs install
+~~~
+
+Be sure to **restart** your terminal after installing the Git LFS.
+
+**3.** Install SDK with CocoaPods in the Project
+
+Run the following command in the project's directory:
+
+~~~
+pod install
+~~~
+
+If you install it successfully, you may get the messages similar to the followings:
+
+~~~
+Analyzing dependencies
+Downloading dependencies
+Installing DJI-SDK-iOS (3.4)
+Generating Pods project
+Integrating client project
+
+[!] Please close any current Xcode sessions and use `FPVDemo.xcworkspace` for this project from now on.
+Pod installation complete! There is 1 dependency from the Podfile and 1 total pod
+installed.
+~~~
 
 ## Tutorial
 
