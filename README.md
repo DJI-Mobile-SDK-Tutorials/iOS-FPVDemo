@@ -26,7 +26,7 @@ The process may take a long time, please wait. For further installation instruct
 
 **2.** Install SDK with CocoaPods in the Project
 
-Run the following command in the **ObjcSampleCode** and **SwiftSampleCode** paths:
+Run the following command in the project's path:
 
 ~~~
 pod install
