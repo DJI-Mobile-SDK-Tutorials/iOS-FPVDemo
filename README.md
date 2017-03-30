@@ -1,5 +1,7 @@
 # iOS-FPVDemo
 
+> **Note: This Sample Project is developed based on iOS SDK v3.5.1, an update version for iOS SDK v4.0 will be published soon.**
+
 ## Introduction
 
 This FPVDemo is design for you to gain a basic understanding of the DJI Mobile SDK. It will implement the FPV view and two basic camera functionalities: **Take Photo** and **Record Video**.
