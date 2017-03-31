@@ -10,7 +10,10 @@
 #import <DJISDK/DJISDK.h>
 #import <VideoPreviewer/VideoPreviewer.h>
 
-@interface DJICameraViewController ()<DJICameraDelegate, DJISDKManagerDelegate, DJIBaseProductDelegate>
+#define WeakRef(__obj) __weak typeof(self) __obj = self
+#define WeakReturn(__obj) if(__obj ==nil)return;
+
+@interface DJICameraViewController ()<DJIVideoFeedListener, DJISDKManagerDelegate, DJIBaseProductDelegate, DJICameraDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *recordBtn;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *changeWorkModeSegmentControl;
@@ -38,6 +41,7 @@
 {
     [super viewWillDisappear:animated];
     [[VideoPreviewer instance] setView:nil];
+    [[DJISDKManager videoFeeder].primaryVideoFeed removeListener:self];
 }
 
 - (void)viewDidLoad {
@@ -76,11 +80,11 @@
 
 - (void)registerApp
 {
-    NSString *appKey = @"Please enter your App Key here.";
-    [DJISDKManager registerApp:appKey withDelegate:self];
+    //Please enter your App key in the "DJISDKAppKey" key in info.plist file.
+    [DJISDKManager registerAppWithDelegate:self];
 }
 
-- (NSString *)formattingSeconds:(int)seconds
+- (NSString *)formattingSeconds:(NSUInteger)seconds
 {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:seconds];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -91,20 +95,21 @@
     return formattedTimeString;
 }
 
-#pragma mark DJISDKManagerDelegate Method
-
--(void) sdkManagerProductDidChangeFrom:(DJIBaseProduct* _Nullable) oldProduct to:(DJIBaseProduct* _Nullable) newProduct
+#pragma mark DJIBaseProductDelegate Method
+- (void)productConnected:(DJIBaseProduct *)product
 {
-    if (newProduct) {
-        [newProduct setDelegate:self];
-        DJICamera* camera = [self fetchCamera];
+    if(product){
+        [product setDelegate:self];
+        DJICamera *camera = [self fetchCamera];
         if (camera != nil) {
             camera.delegate = self;
         }
     }
 }
 
-- (void)sdkManagerDidRegisterAppWithError:(NSError *)error
+#pragma mark DJISDKManagerDelegate Method
+
+- (void)appRegisteredWithError:(NSError *)error
 {
     NSString* message = @"Register App Successed!";
     if (error) {
@@ -114,29 +119,14 @@
         NSLog(@"registerAppSuccess");
     
         [DJISDKManager startConnectionToProduct];
+        [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
         [[VideoPreviewer instance] start];
     }
     
     [self showAlertViewWithTitle:@"Register App" withMessage:message];
 }
 
-#pragma mark - DJIBaseProductDelegate Method
-
--(void) componentWithKey:(NSString *)key changedFrom:(DJIBaseComponent *)oldComponent to:(DJIBaseComponent *)newComponent {
-    
-    if ([key isEqualToString:DJICameraComponent] && newComponent != nil) {
-        __weak DJICamera* camera = [self fetchCamera];
-        if (camera) {
-            [camera setDelegate:self];
-        }
-    }
-}
-
 #pragma mark - DJICameraDelegate
--(void)camera:(DJICamera *)camera didReceiveVideoData:(uint8_t *)videoBuffer length:(size_t)size
-{
-    [[VideoPreviewer instance] push:videoBuffer length:(int)size];
-}
 
 -(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState
 {
@@ -161,17 +151,28 @@
     
 }
 
+#pragma mark - DJIVideoFeedListener
+-(void)videoFeed:(DJIVideoFeed *)videoFeed didUpdateVideoData:(NSData *)videoData {
+    [[VideoPreviewer instance] push:(uint8_t *)videoData.bytes length:(int)videoData.length];
+}
+
+
 #pragma mark - IBAction Methods
 
 - (IBAction)captureAction:(id)sender {
     
-    __weak DJICameraViewController *weakSelf = self;
     __weak DJICamera* camera = [self fetchCamera];
     if (camera) {
-        [camera startShootPhoto:DJICameraShootPhotoModeSingle withCompletion:^(NSError * _Nullable error) {
-            if (error) {
-                [weakSelf showAlertViewWithTitle:@"Take Photo Error" withMessage:error.description];
-            }
+        WeakRef(target);
+        [camera setShootPhotoMode:DJICameraShootPhotoModeSingle withCompletion:^(NSError * _Nullable error) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [camera startShootPhotoWithCompletion:^(NSError * _Nullable error) {
+                    WeakReturn(target);
+                    if (error) {
+                        [target showAlertViewWithTitle:@"Take Photo Error" withMessage:error.description];
+                    }
+                }];
+            });
         }];
     }
 
@@ -179,56 +180,51 @@
 
 - (IBAction)recordAction:(id)sender {
     
-    __weak DJICameraViewController *weakSelf = self;
-    
     __weak DJICamera* camera = [self fetchCamera];
     if (camera) {
-    
+        WeakRef(target);
         if (self.isRecording) {
-            
             [camera stopRecordVideoWithCompletion:^(NSError * _Nullable error) {
+                WeakReturn(target);
                 if (error) {
-                    [weakSelf showAlertViewWithTitle:@"Stop Record Video Error" withMessage:error.description];
+                    [target showAlertViewWithTitle:@"Stop Record Video Error" withMessage:error.description];
                 }
             }];
-            
         }else
         {
             [camera startRecordVideoWithCompletion:^(NSError * _Nullable error) {
+                WeakReturn(target);
                 if (error) {
-                    [weakSelf showAlertViewWithTitle:@"Start Record Video Error" withMessage:error.description];
+                    [target showAlertViewWithTitle:@"Start Record Video Error" withMessage:error.description];
                 }
             }];
         }
-  
     }
 }
 
 - (IBAction)changeWorkModeAction:(id)sender {
     
-    __weak DJICameraViewController *weakSelf = self;
     UISegmentedControl *segmentControl = (UISegmentedControl *)sender;
-    
     __weak DJICamera* camera = [self fetchCamera];
     
     if (camera) {
-        
+        WeakRef(target);
         if (segmentControl.selectedSegmentIndex == 0) { //Take photo
             
-            [camera setCameraMode:DJICameraModeShootPhoto withCompletion:^(NSError * _Nullable error) {
+            [camera setMode:DJICameraModeShootPhoto withCompletion:^(NSError * _Nullable error) {
+                WeakReturn(target);
                 if (error) {
-                    [weakSelf showAlertViewWithTitle:@"Set DJICameraModeShootPhoto Failed" withMessage:error.description];
+                    [target showAlertViewWithTitle:@"Set DJICameraModeShootPhoto Failed" withMessage:error.description];
                 }
-                
             }];
             
         }else if (segmentControl.selectedSegmentIndex == 1){ //Record video
             
-            [camera setCameraMode:DJICameraModeRecordVideo withCompletion:^(NSError * _Nullable error) {
+            [camera setMode:DJICameraModeRecordVideo withCompletion:^(NSError * _Nullable error) {
+                WeakReturn(target);
                 if (error) {
-                    [weakSelf showAlertViewWithTitle:@"Set DJICameraModeRecordVideo Failed" withMessage:error.description];
+                    [target showAlertViewWithTitle:@"Set DJICameraModeRecordVideo Failed" withMessage:error.description];
                 }
-                
             }];
             
         }

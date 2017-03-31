@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Camera View Controller-->
@@ -14,14 +18,18 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMm-p3-aSU">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIt-71-wG3">
-                                <rect key="frame" x="0.0" y="543" width="600" height="57"/>
+                                <rect key="frame" x="0.0" y="318" width="667" height="57"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="teR-U4-CGZ">
-                                        <rect key="frame" x="359" y="15" width="189" height="29"/>
+                                        <rect key="frame" x="452" y="15" width="189" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="189" id="yzT-xe-PkJ"/>
                                         </constraints>
@@ -34,12 +42,12 @@
                                         </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQy-a4-Olk">
-                                        <rect key="frame" x="257" y="8" width="87" height="41"/>
+                                        <rect key="frame" x="212" y="8" width="186" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="41" id="MNL-Q2-Ogg"/>
                                         </constraints>
                                         <state key="normal" title="Start Record">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="recordAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OpH-bb-W22"/>
@@ -52,31 +60,31 @@
                                             <constraint firstAttribute="height" constant="41" id="eVv-rd-Jre"/>
                                         </constraints>
                                         <state key="normal" title="Capture">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="captureAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wwL-8c-Ozm"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="teR-U4-CGZ" firstAttribute="leading" secondItem="RQy-a4-Olk" secondAttribute="trailing" constant="35" id="GSm-dh-QsN">
-                                        <variation key="widthClass=compact" constant="23"/>
+                                        <variation key="widthClass=compact" constant="54"/>
                                     </constraint>
                                     <constraint firstItem="RQy-a4-Olk" firstAttribute="top" secondItem="gIt-71-wG3" secondAttribute="top" constant="8" id="O4G-JV-z1N"/>
                                     <constraint firstAttribute="height" constant="57" id="Sa6-dX-R8I"/>
                                     <constraint firstItem="RQy-a4-Olk" firstAttribute="leading" secondItem="hcq-mf-WA4" secondAttribute="trailing" priority="500" constant="113" id="SaS-QJ-2c5">
-                                        <variation key="widthClass=compact" constant="36"/>
+                                        <variation key="widthClass=compact" constant="68"/>
                                     </constraint>
                                     <constraint firstItem="teR-U4-CGZ" firstAttribute="leading" secondItem="RQy-a4-Olk" secondAttribute="trailing" constant="168" id="jBe-EK-wOB"/>
                                     <constraint firstItem="teR-U4-CGZ" firstAttribute="top" secondItem="gIt-71-wG3" secondAttribute="top" constant="15" id="kUH-Gb-7Io"/>
                                     <constraint firstItem="hcq-mf-WA4" firstAttribute="leading" secondItem="gIt-71-wG3" secondAttribute="leading" priority="500" constant="89" id="sXz-vh-bmf">
-                                        <variation key="widthClass=compact" constant="37"/>
+                                        <variation key="widthClass=compact" constant="89"/>
                                     </constraint>
                                     <constraint firstItem="hcq-mf-WA4" firstAttribute="top" secondItem="gIt-71-wG3" secondAttribute="top" constant="8" id="vFs-Bj-T3c"/>
                                     <constraint firstAttribute="trailing" secondItem="teR-U4-CGZ" secondAttribute="trailing" constant="52" id="wPx-Jm-miB">
-                                        <variation key="widthClass=compact" constant="10"/>
+                                        <variation key="widthClass=compact" constant="26"/>
                                     </constraint>
                                 </constraints>
                                 <variation key="default">
@@ -96,32 +104,28 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMm-p3-aSU">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="545"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKe-gA-45R">
-                                <rect key="frame" x="200" y="28" width="200" height="21"/>
+                                <rect key="frame" x="233" y="28" width="200" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="iV8-iF-Xpc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="KMm-p3-aSU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="15J-Yo-TNC"/>
                             <constraint firstItem="TKe-gA-45R" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="4Ag-7O-RyZ"/>
                             <constraint firstAttribute="trailing" secondItem="KMm-p3-aSU" secondAttribute="trailing" id="7XI-HW-lGM"/>
                             <constraint firstAttribute="trailing" secondItem="gIt-71-wG3" secondAttribute="trailing" id="8RH-NQ-Nn1"/>
-                            <constraint firstItem="TKe-gA-45R" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="200" id="HdM-OH-x8a"/>
+                            <constraint firstItem="TKe-gA-45R" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="233" id="HdM-OH-x8a"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gIt-71-wG3" secondAttribute="bottom" id="OWB-oI-C9w"/>
-                            <constraint firstItem="gIt-71-wG3" firstAttribute="top" secondItem="KMm-p3-aSU" secondAttribute="bottom" constant="-2" id="RbB-gD-crL"/>
+                            <constraint firstItem="gIt-71-wG3" firstAttribute="top" secondItem="KMm-p3-aSU" secondAttribute="bottom" constant="-57" id="RbB-gD-crL"/>
                             <constraint firstItem="KMm-p3-aSU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="V57-jf-JYP"/>
                             <constraint firstItem="gIt-71-wG3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qKk-Bs-J9L"/>
-                            <constraint firstAttribute="trailing" secondItem="TKe-gA-45R" secondAttribute="trailing" constant="200" id="yYc-UP-aa0"/>
+                            <constraint firstAttribute="trailing" secondItem="TKe-gA-45R" secondAttribute="trailing" constant="234" id="yYc-UP-aa0"/>
                         </constraints>
                     </view>
                     <connections>
@@ -133,7 +137,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="343" y="510"/>
+            <point key="canvasLocation" x="342.25352112676057" y="508.125"/>
         </scene>
     </scenes>
 </document>
