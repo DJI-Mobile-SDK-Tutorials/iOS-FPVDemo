@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3573F704D3455425A4D502B3 /* libPods-FPVDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3746ABCB1EB291DED112D5CE /* libPods-FPVDemo.a */; };
-		A41255A11DCB13E7002DF91B /* VideoPreviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A412559C1DCB110B002DF91B /* VideoPreviewer.framework */; };
-		A41255A21DCB13E7002DF91B /* VideoPreviewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A412559C1DCB110B002DF91B /* VideoPreviewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A45F374F1E8E19C8008D8B8C /* VideoPreviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A412559C1DCB110B002DF91B /* VideoPreviewer.framework */; };
+		A45F37501E8E19C8008D8B8C /* VideoPreviewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A412559C1DCB110B002DF91B /* VideoPreviewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A4F501061B452220003A82BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F501051B452220003A82BF /* main.m */; };
 		A4F501091B452220003A82BF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F501081B452220003A82BF /* AppDelegate.m */; };
 		A4F5010F1B452220003A82BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4F5010D1B452220003A82BF /* Main.storyboard */; };
@@ -27,7 +27,7 @@
 			remoteGlobalIDString = 02A543FD1C3C51CB0083C11B;
 			remoteInfo = VideoPreviewer;
 		};
-		A41255A31DCB13E7002DF91B /* PBXContainerItemProxy */ = {
+		A45F37511E8E19C8008D8B8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A41255971DCB110B002DF91B /* VideoPreviewer.xcodeproj */;
 			proxyType = 1;
@@ -44,13 +44,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		A4E8222A1C3D075B0095BA20 /* Embed Frameworks */ = {
+		A45F37531E8E19C8008D8B8C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A41255A21DCB13E7002DF91B /* VideoPreviewer.framework in Embed Frameworks */,
+				A45F37501E8E19C8008D8B8C /* VideoPreviewer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,8 +83,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A45F374F1E8E19C8008D8B8C /* VideoPreviewer.framework in Frameworks */,
 				3573F704D3455425A4D502B3 /* libPods-FPVDemo.a in Frameworks */,
-				A41255A11DCB13E7002DF91B /* VideoPreviewer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,14 +197,14 @@
 				A4F500FC1B452220003A82BF /* Sources */,
 				A4F500FD1B452220003A82BF /* Frameworks */,
 				A4F500FE1B452220003A82BF /* Resources */,
-				A4E8222A1C3D075B0095BA20 /* Embed Frameworks */,
 				61F7F8C59CD2C12963EAF9C2 /* [CP] Embed Pods Frameworks */,
 				A69504A6B8E28993284D2475 /* [CP] Copy Pods Resources */,
+				A45F37531E8E19C8008D8B8C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A41255A41DCB13E7002DF91B /* PBXTargetDependency */,
+				A45F37521E8E19C8008D8B8C /* PBXTargetDependency */,
 			);
 			name = FPVDemo;
 			productName = FPVDemo;
@@ -351,7 +351,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -378,10 +378,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A41255A41DCB13E7002DF91B /* PBXTargetDependency */ = {
+		A45F37521E8E19C8008D8B8C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VideoPreviewer;
-			targetProxy = A41255A31DCB13E7002DF91B /* PBXContainerItemProxy */;
+			targetProxy = A45F37511E8E19C8008D8B8C /* PBXContainerItemProxy */;
 		};
 		A4F5011B1B452220003A82BF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -512,6 +512,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.FPVDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -536,6 +537,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.FPVDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
