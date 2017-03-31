@@ -1,7 +1,5 @@
 # iOS-FPVDemo
 
-> **Note: This Sample Project is developed based on iOS SDK v3.5.1, an update version for iOS SDK v4.0 will be published soon.**
-
 ## Introduction
 
 This FPVDemo is design for you to gain a basic understanding of the DJI Mobile SDK. It will implement the FPV view and two basic camera functionalities: **Take Photo** and **Record Video**.
@@ -10,7 +8,7 @@ This FPVDemo is design for you to gain a basic understanding of the DJI Mobile S
 
  - iOS 9.0+
  - Xcode 8.0+
- - DJI iOS SDK 3.5.1
+ - DJI iOS SDK 4.0
 
 ## SDK Installation with CocoaPods
 
@@ -39,7 +37,7 @@ If you install it successfully, you should get the messages similar to the follo
 ~~~
 Analyzing dependencies
 Downloading dependencies
-Installing DJI-SDK-iOS (3.5.1)
+Installing DJI-SDK-iOS (4.0)
 Generating Pods project
 Integrating client project
 
