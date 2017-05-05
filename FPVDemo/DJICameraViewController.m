@@ -29,29 +29,53 @@
 
 @implementation DJICameraViewController
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [[VideoPreviewer instance] setView:self.fpvPreviewView];
-    [self registerApp];
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[VideoPreviewer instance] setView:nil];
-    [[DJISDKManager videoFeeder].primaryVideoFeed removeListener:self];
+    DJICamera *camera = [self fetchCamera];
+    if (camera && camera.delegate == self) {
+        [camera setDelegate:nil];
+    }
+    [self resetVideoPreview];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self registerApp];
     [self.currentRecordTimeLabel setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setupVideoPreviewer {
+    [[VideoPreviewer instance] setView:self.fpvPreviewView];
+    DJIBaseProduct *product = [DJISDKManager product];
+    if ([product.model isEqual:DJIAircraftModelNameA3] ||
+        [product.model isEqual:DJIAircraftModelNameN3] ||
+        [product.model isEqual:DJIAircraftModelNameMatrice600] ||
+        [product.model isEqual:DJIAircraftModelNameMatrice600Pro]){
+        [[DJISDKManager videoFeeder].secondaryVideoFeed addListener:self withQueue:nil];
+
+    }else{
+        [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
+    }
+    [[VideoPreviewer instance] start];
+}
+
+- (void)resetVideoPreview {
+    [[VideoPreviewer instance] unSetView];
+    DJIBaseProduct *product = [DJISDKManager product];
+    if ([product.model isEqual:DJIAircraftModelNameA3] ||
+        [product.model isEqual:DJIAircraftModelNameN3] ||
+        [product.model isEqual:DJIAircraftModelNameMatrice600] ||
+        [product.model isEqual:DJIAircraftModelNameMatrice600Pro]){
+        [[DJISDKManager videoFeeder].secondaryVideoFeed removeListener:self];
+    }else{
+        [[DJISDKManager videoFeeder].primaryVideoFeed removeListener:self];
+    }
 }
 
 #pragma mark Custom Methods
@@ -104,6 +128,7 @@
         if (camera != nil) {
             camera.delegate = self;
         }
+        [self setupVideoPreviewer];
     }
 }
 
@@ -119,8 +144,6 @@
         NSLog(@"registerAppSuccess");
     
         [DJISDKManager startConnectionToProduct];
-        [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
-        [[VideoPreviewer instance] start];
     }
     
     [self showAlertViewWithTitle:@"Register App" withMessage:message];
@@ -155,7 +178,6 @@
 -(void)videoFeed:(DJIVideoFeed *)videoFeed didUpdateVideoData:(NSData *)videoData {
     [[VideoPreviewer instance] push:(uint8_t *)videoData.bytes length:(int)videoData.length];
 }
-
 
 #pragma mark - IBAction Methods
 
