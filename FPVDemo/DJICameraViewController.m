@@ -132,6 +132,16 @@
     }
 }
 
+- (void)productDisconnected
+{
+    DJICamera *camera = [self fetchCamera];
+    if (camera && camera.delegate == self) {
+        [camera setDelegate:nil];
+    }
+    [self resetVideoPreview];
+    
+}
+
 #pragma mark DJISDKManagerDelegate Method
 
 - (void)appRegisteredWithError:(NSError *)error
