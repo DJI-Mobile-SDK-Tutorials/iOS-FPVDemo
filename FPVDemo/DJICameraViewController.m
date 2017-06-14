@@ -13,7 +13,7 @@
 #define WeakRef(__obj) __weak typeof(self) __obj = self
 #define WeakReturn(__obj) if(__obj ==nil)return;
 
-@interface DJICameraViewController ()<DJIVideoFeedListener, DJISDKManagerDelegate, DJIBaseProductDelegate, DJICameraDelegate>
+@interface DJICameraViewController ()<DJIVideoFeedListener, DJISDKManagerDelegate, DJICameraDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *recordBtn;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *changeWorkModeSegmentControl;
@@ -119,7 +119,7 @@
     return formattedTimeString;
 }
 
-#pragma mark DJIBaseProductDelegate Method
+#pragma mark DJISDKManagerDelegate Method
 - (void)productConnected:(DJIBaseProduct *)product
 {
     if(product){
