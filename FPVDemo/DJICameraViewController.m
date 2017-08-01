@@ -123,13 +123,19 @@
 - (void)productConnected:(DJIBaseProduct *)product
 {
     if(product){
-        [product setDelegate:self];
         DJICamera *camera = [self fetchCamera];
         if (camera != nil) {
             camera.delegate = self;
         }
         [self setupVideoPreviewer];
     }
+    
+    //If this demo is used in China, it's required to login to your DJI account to activate the application. Also you need to use DJI Go app to bind the aircraft to your DJI account. For more details, please check this demo's tutorial.
+    [[DJISDKManager userAccountManager] logIntoDJIUserAccountWithAuthorizationRequired:NO withCompletion:^(DJIUserAccountState state, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Login failed: %@", error.description);
+        }
+    }];
 }
 
 - (void)productDisconnected
