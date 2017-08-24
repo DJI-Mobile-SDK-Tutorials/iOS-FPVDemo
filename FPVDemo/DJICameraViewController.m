@@ -29,6 +29,12 @@
 
 @implementation DJICameraViewController
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self registerApp];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -41,7 +47,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self registerApp];
     [self.currentRecordTimeLabel setHidden:YES];
 }
 
@@ -136,6 +141,9 @@
             NSLog(@"Login failed: %@", error.description);
         }
     }];
+    
+    [self showAlertViewWithTitle:@"productConnected" withMessage:@""];
+
 }
 
 - (void)productDisconnected
