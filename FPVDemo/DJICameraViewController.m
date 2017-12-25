@@ -166,7 +166,6 @@
     }else
     {
         NSLog(@"registerAppSuccess");
-    
         [DJISDKManager startConnectionToProduct];
     }
     
@@ -207,7 +206,7 @@
 
 - (IBAction)captureAction:(id)sender {
     
-    __weak DJICamera* camera = [self fetchCamera];
+    DJICamera* camera = [self fetchCamera];
     if (camera) {
         WeakRef(target);
         [camera setShootPhotoMode:DJICameraShootPhotoModeSingle withCompletion:^(NSError * _Nullable error) {
@@ -226,7 +225,7 @@
 
 - (IBAction)recordAction:(id)sender {
     
-    __weak DJICamera* camera = [self fetchCamera];
+    DJICamera* camera = [self fetchCamera];
     if (camera) {
         WeakRef(target);
         if (self.isRecording) {
@@ -251,7 +250,7 @@
 - (IBAction)changeWorkModeAction:(id)sender {
     
     UISegmentedControl *segmentControl = (UISegmentedControl *)sender;
-    __weak DJICamera* camera = [self fetchCamera];
+    DJICamera* camera = [self fetchCamera];
     
     if (camera) {
         WeakRef(target);
