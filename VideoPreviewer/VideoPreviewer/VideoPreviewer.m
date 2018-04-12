@@ -201,6 +201,7 @@ LB2AUDRemoveParserDelegate>{
         //use hardware decode on ios8
         _hw_decoder = [[H264VTDecode alloc] init];
         _hw_decoder.delegate = self;
+        _enableHardwareDecode = YES;
     }
 #endif
 
@@ -388,12 +389,10 @@ static VideoPreviewer* previewer = nil;
     BEGIN_MAIN_DISPATCH_QUEUE
     if(_glView != nil && _glView.superview !=nil)
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_glView removeFromSuperview];
-            //_glView = nil; // Deliberately not release dglView, Avoid each entry view flickering。
-            _status.isGLViewInit = NO;
-            self.internalGLView = nil;
-        });
+        [_glView removeFromSuperview];
+        //_glView = nil; // Deliberately not release dglView, Avoid each entry view flickering。
+        _status.isGLViewInit = NO;
+        self.internalGLView = nil;
     }
     END_DISPATCH_QUEUE
 }
@@ -614,6 +613,12 @@ static VideoPreviewer* previewer = nil;
 
     _encoderType = encoderType;
     _stream_basic_info.encoderType = encoderType;
+    
+    if (_encoderType == H264EncoderType_MavicAir) {
+        self.pocBufferSize = 2;
+    } else {
+        self.pocBufferSize = 0;
+    }
 }
 
 -(void) setEnableShadowAndHighLightenhancement:(BOOL)enable{
@@ -629,7 +634,7 @@ static VideoPreviewer* previewer = nil;
     if (_enableHardwareDecode == enableHardwareDecode) {
         return;
     }
-
+    
     _enableHardwareDecode = enableHardwareDecode;
     [_hw_decoder resetLater];
 }
