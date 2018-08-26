@@ -8,7 +8,7 @@
 
 #import "DJICameraViewController.h"
 #import <DJISDK/DJISDK.h>
-#import <VideoPreviewer/VideoPreviewer.h>
+#import <DJIWidget/DJIVideoPreviewer.h>
 
 #define WeakRef(__obj) __weak typeof(self) __obj = self
 #define WeakReturn(__obj) if(__obj ==nil)return;
@@ -56,7 +56,7 @@
 }
 
 - (void)setupVideoPreviewer {
-    [[VideoPreviewer instance] setView:self.fpvPreviewView];
+    [[DJIVideoPreviewer instance] setView:self.fpvPreviewView];
     DJIBaseProduct *product = [DJISDKManager product];
     if ([product.model isEqual:DJIAircraftModelNameA3] ||
         [product.model isEqual:DJIAircraftModelNameN3] ||
@@ -67,11 +67,11 @@
     }else{
         [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
     }
-    [[VideoPreviewer instance] start];
+    [[DJIVideoPreviewer instance] start];
 }
 
 - (void)resetVideoPreview {
-    [[VideoPreviewer instance] unSetView];
+    [[DJIVideoPreviewer instance] unSetView];
     DJIBaseProduct *product = [DJISDKManager product];
     if ([product.model isEqual:DJIAircraftModelNameA3] ||
         [product.model isEqual:DJIAircraftModelNameN3] ||
@@ -199,7 +199,7 @@
 
 #pragma mark - DJIVideoFeedListener
 -(void)videoFeed:(DJIVideoFeed *)videoFeed didUpdateVideoData:(NSData *)videoData {
-    [[VideoPreviewer instance] push:(uint8_t *)videoData.bytes length:(int)videoData.length];
+    [[DJIVideoPreviewer instance] push:(uint8_t *)videoData.bytes length:(int)videoData.length];
 }
 
 #pragma mark - IBAction Methods
