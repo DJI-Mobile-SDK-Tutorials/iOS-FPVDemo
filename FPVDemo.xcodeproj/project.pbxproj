@@ -466,6 +466,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dji.FPVDemo3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 arm64e armv7s";
 			};
 			name = Debug;
 		};
@@ -492,6 +493,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dji.FPVDemo3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 arm64e armv7s";
 			};
 			name = Release;
 		};
