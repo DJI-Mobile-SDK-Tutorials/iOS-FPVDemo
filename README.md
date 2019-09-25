@@ -8,8 +8,8 @@ This FPVDemo is design for you to gain a basic understanding of the DJI Mobile S
 
  - iOS 9.0+
  - Xcode 8.0+
- - DJI iOS SDK 4.10
- - DJIWidget 1.5
+ - DJI iOS SDK 4.11
+ - DJIWidget 1.6.1
 
 ## SDK Installation with CocoaPods
 
@@ -38,8 +38,8 @@ If you install it successfully, you should get the messages similar to the follo
 ~~~
 Analyzing dependencies
 Downloading dependencies
-Installing DJI-SDK-iOS (4.10)
-Installing DJIWidget (1.5)
+Installing DJI-SDK-iOS (4.11)
+Installing DJIWidget (1.6.1)
 Generating Pods project
 Integrating client project
 
