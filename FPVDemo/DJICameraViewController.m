@@ -172,6 +172,10 @@
     [self showAlertViewWithTitle:@"Register App" withMessage:message];
 }
 
+- (void)didUpdateDatabaseDownloadProgress:(NSProgress *)progress{
+    NSLog(@"Database Download Progress: %f", progress.fractionCompleted);
+}
+
 #pragma mark - DJICameraDelegate
 
 -(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState
