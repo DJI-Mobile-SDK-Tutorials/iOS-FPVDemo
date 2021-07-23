@@ -13,7 +13,9 @@
 #define WeakRef(__obj) __weak typeof(self) __obj = self
 #define WeakReturn(__obj) if(__obj ==nil)return;
 
-@interface DJICameraViewController ()<DJIVideoFeedListener, DJISDKManagerDelegate, DJICameraDelegate>
+#define ENTER_DEBUG_MODE 0
+
+@interface DJICameraViewController ()<DJIVideoFeedListener, DJISDKManagerDelegate, DJICameraDelegate,DJIVideoPreviewerFrameControlDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *recordBtn;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *changeWorkModeSegmentControl;
@@ -68,6 +70,7 @@
         [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
     }
     [[DJIVideoPreviewer instance] start];
+    [DJIVideoPreviewer instance].frameControlHandler = self;
 }
 
 - (void)resetVideoPreview {
@@ -166,7 +169,11 @@
     }else
     {
         NSLog(@"registerAppSuccess");
+#if ENTER_DEBUG_MODE
+        [DJISDKManager enableBridgeModeWithBridgeAppIP:@"10.81.52.50"];
+#else
         [DJISDKManager startConnectionToProduct];
+#endif
     }
     
     [self showAlertViewWithTitle:@"Register App" withMessage:message];
@@ -279,6 +286,33 @@
         }
     }
 
+}
+
+#pragma mark - DJIVideoPreviewerFrameControlDelegate Method
+- (BOOL)parseDecodingAssistInfoWithBuffer:(uint8_t *)buffer length:(int)length assistInfo:(DJIDecodingAssistInfo *)assistInfo {
+    return [[DJISDKManager videoFeeder].primaryVideoFeed parseDecodingAssistInfoWithBuffer:buffer length:length assistInfo:(void *)assistInfo];
+}
+
+- (BOOL)isNeedFitFrameWidth {
+    NSString* displayName = [self fetchCamera].displayName;
+    if ([displayName isEqualToString:DJICameraDisplayNameMavic2ZoomCamera] ||
+        [displayName isEqualToString:DJICameraDisplayNameMavic2ProCamera]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)syncDecoderStatus:(BOOL)isNormal {
+    [[DJISDKManager videoFeeder].primaryVideoFeed syncDecoderStatus:isNormal];
+}
+
+- (void)decodingDidSucceedWithTimestamp:(uint32_t)timestamp {
+    [[DJISDKManager videoFeeder].primaryVideoFeed decodingDidSucceedWithTimestamp:(NSUInteger)timestamp];
+}
+
+- (void)decodingDidFail {
+    [[DJISDKManager videoFeeder].primaryVideoFeed decodingDidFail];
 }
 
 @end
