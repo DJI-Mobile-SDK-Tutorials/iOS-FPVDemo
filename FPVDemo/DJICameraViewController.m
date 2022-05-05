@@ -69,6 +69,9 @@
     }else{
         [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
     }
+    if ([product.model isEqual:DJIAircraftModelNameDJIMini2]) {
+        [[DJIVideoPreviewer instance] setEncoderType:H264EncoderType_DJIMini2];
+    }
     [[DJIVideoPreviewer instance] start];
     [DJIVideoPreviewer instance].frameControlHandler = self;
 }
